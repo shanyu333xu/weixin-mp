@@ -1,0 +1,21 @@
+<!--index.wxml-->
+<!-- <view class="date">{{currentDate}}</view> -->
+<view class="stock-list">
+    <view class="stock-header">
+    <text>股票名称</text>
+    <text>最新价</text>
+    <text>涨跌幅</text>
+    </view>
+  <block wx:for="{{stocks}}" wx:key="code">
+    <view class="stock-item">
+      <view class="stock-info">
+        <text class="stock-name">{{item.name}}</text>
+        <text class="stock-code">{{item.code}}</text>
+      </view>
+      <text class="stock-price">{{item.price}}</text>
+      <text class="stock-change {{item.change[0] === '-' ? 'fall' : 'rise'}}">
+      {{item.change}}
+    </text>
+    </view>
+  </block>
+</view>

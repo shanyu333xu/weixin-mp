@@ -1,0 +1,66 @@
+.date{
+ position: absolute;
+ font-size: 10px; 
+}
+
+.stock-list {
+  padding: 10px;
+}
+.stock-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #e9e9e9;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+.stock-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.stock-name-code {
+  flex-grow: 1;
+}
+
+.stock-name {
+  font-size: 16px;
+  color: #333;
+}
+
+.stock-code {
+  font-size: 14px;
+  color: #999;
+  padding-top: 3px;
+  display: block;  
+}
+
+.stock-price-change {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: flex-end;  /* 水平靠右对齐 */
+}
+
+.stock-price {
+  font-size: 16px;
+  color: #333;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.stock-change {
+  font-size: 15px;
+  margin-top: -15px;
+  text-align: center;
+}
+
+.rise {
+  color: #ff4444; /* 涨为红色 */
+}
+
+.fall {
+  color: #33cc33; /* 跌为绿色 */
+}
