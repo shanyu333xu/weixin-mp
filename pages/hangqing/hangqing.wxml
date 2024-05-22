@@ -1,0 +1,54 @@
+<view class="header">
+  <button class="login-button" bindtap="navigateToLogin">
+    <image src="../images/登录.png"></image>
+  </button>
+  <button type="primary" bindtap="toStockInfo">股票页面</button>
+  <view class="title-space"></view>
+  <view class="title-space"></view>
+</view>
+<view class="page-header">
+  <text>{{stockDate}}</text>
+</view>
+<text>今日板块</text>
+<scroll-view scroll-x="true" class="modules-scroll-view">
+  <view class="module" wx:for="{{modules}}" wx:key="title">
+    <view class="module-header {{index==2?'second':'first'}}">{{item.title}}</view>
+    <view class="stocks-container">
+      <view class="stock-row" wx:for="{{item.stocks}}" wx:key="name">
+        <view class="stock-card">
+          <view class="stock-name">{{item.name}}</view>
+          <view class="stock-percent {{item.percent.startsWith('-') ? 'negative' : 'positive'}}">{{item.percent}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+<text>股票排行</text>
+<view class="page-header"></view>
+<view class="tabs">
+  <text class="tab {{activeTab === 'rise' ? 'active' : ''}}" data-type="rise" bindtap="handleTabChange">涨幅榜</text>
+  <text class="tab {{activeTab === 'fall' ? 'active' : ''}}" data-type="fall" bindtap="handleTabChange">跌幅榜</text>
+  <text class="tab {{activeTab === 'volume' ? 'active' : ''}}" data-type="volume" bindtap="handleTabChange">成交额</text>
+  <text class="tab {{activeTab === 'speed' ? 'active' : ''}}" data-type="speed" bindtap="handleTabChange">涨速榜</text>
+</view>
+<scroll-view scroll-y="true" style="height: 300px;">
+  <view class="stock-list-header">
+    <text class="header-item">股票名称</text>
+    <text class="header-item">最新价</text>
+    <text class="header-item">涨跌幅</text>
+    <text class="header-item">涨速</text>
+  </view>
+  <view class="stocks-list">
+    <block wx:for="{{displayStocks}}" wx:key="unique">
+      <view class="stock-item">
+        <view class="name-code">
+          <text class="stock-name">{{item.name}}</text>
+          <text class="stock-code">{{item.code}}</text>
+        </view>
+        <text class="price {{item.change[0]=='-' ? 'negative' : 'positive'}}">{{item.price}}</text>
+        <text class="change {{item.change[0]=='-' ? 'negative' : 'positive'}}">{{item.change}}</text>
+        <text class="speed {{item.speed[0]=='-' ? 'negative' : 'positive'}}">{{item.speed}}</text>
+      </view>
+    </block>
+  </view>
+</scroll-view>

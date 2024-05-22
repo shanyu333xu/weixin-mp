@@ -1,28 +1,49 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/list/list",
- 
-    "pages/logs/logs"
-   
+    "pages/hangqing/hangqing",
+    "pages/shouye/shouye",
+    "pages/zixuan/zixuan",
+    "pages/jiaoyi/jiaoyi",
+    "pages/dasai/dasai",
+    "pages/loginByPhone/loginByPhone",
+    "pages/stockInfo/stockInfo"
+    
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "同花顺模拟炒股",
     "navigationBarBackgroundColor": "#ffffff"
+   
   },
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/shouye/shouye",
+        "iconPath": "pages/images/shouye.png",
+        "selectedIconPath": "pages/images/shouye.png",
+        "text":"首页"
+      },
+      {
+        "pagePath": "pages/hangqing/hangqing",
         "iconPath": "pages/images/hangqing.png",
         "selectedIconPath": "pages/images/hangqing.png",
         "text":"行情"
       },{
-        "pagePath": "pages/logs/logs",
+        "pagePath": "pages/zixuan/zixuan",
         "iconPath": "pages/images/zixuan.png",
         "selectedIconPath": "pages/images/zixuan.png",
         "text":"自选"
+      },{
+        "pagePath": "pages/jiaoyi/jiaoyi",
+        "iconPath": "pages/images/jiaoyi.png",
+        "selectedIconPath": "pages/images/jiaoyi.png",
+        "text":"交易"
+      }
+      ,{
+        "pagePath": "pages/dasai/dasai",
+        "iconPath": "pages/images/dasai.png",
+        "selectedIconPath": "pages/images/dasai.png",
+        "text":"大赛"
       }
     ]
   },
@@ -30,4 +51,5 @@
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"
+  
 }

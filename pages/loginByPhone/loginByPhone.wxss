@@ -1,0 +1,57 @@
+.container {
+  padding: 100rpx;
+}
+.title {
+  font-size: 24px;
+  text-align: center; /* 文本居中对齐 */
+}
+.input-wrapper {
+  margin-bottom: 20rpx;
+}
+.login-btn {
+  background-color: #ccc;
+  width: 100%;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.login-btn:disabled {
+  background-color: #ccc;
+}
+
+.input-wrapper {
+display: flex;
+}
+
+.input-wrapper input {
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+
+.code-btn {
+  background-color: #336699;
+  color: #ffffff;
+  border: none;
+  width: 5px;
+  border-radius: 5px;
+  padding: 8px 2px; /* 调整按钮的内边距 */
+  font-size: 13px;
+
+}
+.code-input{
+  width: 96px !important;
+}
+.code-btn {
+  background-color: #336699;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 2px; /* 调整按钮的内边距 */
+  font-size: 13px;
+  width: 80px !important;
+}

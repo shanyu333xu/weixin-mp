@@ -41,7 +41,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center; 
-  align-items: flex-end;  /* 水平靠右对齐 */
+  align-items: flex-end;  
 }
 
 .stock-price {

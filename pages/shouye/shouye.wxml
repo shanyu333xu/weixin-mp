@@ -1,0 +1,6 @@
+<view class="custom-nav">
+  <button class="avatar-btn" bindtap="goToLoginPage">
+    <image class="avatar" src="../images/头像.png"></image>
+  </button>
+</view>
+<view class="title">同花顺模拟炒股</view>

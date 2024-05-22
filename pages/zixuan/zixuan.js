@@ -33,7 +33,7 @@ Page({
 
   bindViewTap() {
     wx.navigateTo({
-      url: '../logs/logs'
+      url: '../zixuan/zixuan'
     })
   },
   onChooseAvatar(e) {
