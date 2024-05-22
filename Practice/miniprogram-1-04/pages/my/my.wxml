@@ -1,8 +1,0 @@
-<!-- 我的页面：mine.wxml -->
-<view class="page">
-  <view class="content">
-    <text class="title">我的页面</text>
-    <!-- 其他内容 -->
-    <button class="login-btn" bindtap="goToLogin">用户登录</button>
-  </view>
-</view>
