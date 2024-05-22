@@ -1,0 +1,36 @@
+<view class="container">
+  <view class="stock-info">
+    <text class="header">股票信息</text>
+    <text>股票名称：{{stock.name}}</text>
+    <text>股票代码：{{stock.code}}</text>
+    <text>最新价：{{stock.latestPrice}}</text>
+    <text>最高价：{{stock.highestPrice}}</text>
+    <text>最低价：{{stock.lowestPrice}}</text>
+    <text>开盘价：{{stock.openingPrice}}</text>
+    <text>成交量：{{stock.volume}}</text>
+    <text>成交额：{{stock.amount}}</text>
+  </view>
+  <view class="charts">
+    <text class="header">分时图</text>
+    <image src="{{stock.minuteChart}}" mode="widthFix"/>
+    <text class="header">日K线图</text>
+    <image src="{{stock.dailyKChart}}" mode="widthFix"/>
+    <text class="header">周K线图</text>
+    <image src="{{stock.weeklyKChart}}" mode="widthFix"/>
+    <text class="header">月K线图</text>
+    <image src="{{stock.monthlyKChart}}" mode="widthFix"/>
+  </view>
+  <view class="order-book">
+    <text class="header">买卖盘</text>
+    <text>买一：{{stock.buy1}}</text>
+    <text>买二：{{stock.buy2}}</text>
+    <text>买三：{{stock.buy3}}</text>
+    <text>买四：{{stock.buy4}}</text>
+    <text>买五：{{stock.buy5}}</text>
+    <text>卖一：{{stock.sell1}}</text>
+    <text>卖二：{{stock.sell2}}</text>
+    <text>卖三：{{stock.sell3}}</text>
+    <text>卖四：{{stock.sell4}}</text>
+    <text>卖五：{{stock.sell5}}</text>
+  </view>
+</view>
