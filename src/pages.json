@@ -24,9 +24,9 @@
     "spacing": "3px",
     "list": [
       {
-        "iconPath": "static/tabbar/home.png",
-        "selectedIconPath": "static/tabbar/homeHL.png",
-        "pagePath": "pages/index/index",
+        "iconPath": "static/images/home.png",
+        "selectedIconPath": "static/images/home.png",
+        "pagePath": "pages/home/home",
         "text": "首页"
       },
       {
@@ -39,8 +39,9 @@
   },
   "pages": [
     {
-      "path": "pages/index/index",
+      "path": "pages/home/home",
       "type": "home",
+      "layout": "default",
       "style": {
         "navigationStyle": "custom",
         "navigationBarTitleText": "首页"
@@ -51,6 +52,14 @@
       "type": "page",
       "style": {
         "navigationBarTitleText": "关于"
+      }
+    },
+    {
+      "path": "pages/index/index",
+      "type": "page",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "首页"
       }
     }
   ],
