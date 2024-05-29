@@ -1,23 +1,21 @@
 {
-  "name": "weixin-mp",
-  "version": "1.0.0",
-  "description": "",
-  "main": ".eslintrc.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shanyu333xu/weixin-mp.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/shanyu333xu/weixin-mp/issues"
-  },
-  "homepage": "https://github.com/shanyu333xu/weixin-mp#readme",
-  "dependencies": {
-  
-  }
+	"name": "weixin-mp",
+	"version": "1.0.0",
+	"description": "",
+	"main": ".eslintrc.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"dependencies": {},
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/shanyu333xu/weixin-mp.git"
+	},
+	"keywords": [],
+	"bugs": {
+		"url": "https://github.com/shanyu333xu/weixin-mp/issues"
+	},
+	"homepage": "https://github.com/shanyu333xu/weixin-mp#readme"
 }

@@ -1,0 +1,1 @@
+<view><scroll-view class="scrollarea" scroll-y="{{true}}" type="list"><view class="container"><view class="userinfo"><view class="_p">这是交易页面</view></view></view></scroll-view></view>

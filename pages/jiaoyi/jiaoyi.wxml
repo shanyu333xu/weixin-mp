@@ -1,7 +1,0 @@
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-    <p>这是交易页面</p>
-    </view>
-  </view>
-</scroll-view>

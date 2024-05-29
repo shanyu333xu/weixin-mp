@@ -1,0 +1,73 @@
+开始转换……
+小程序路径:  E:/Desktop/Education/Semester06/软件项目研发实践3/weixin-mp
+搜索到63个文件(含目录)，耗时：5ms
+
+开始分析文件
+分析文件信息完成，共16组数据
+开始转换文件组为vue文件
+转换进度: 1 / 32   fileKey：app
+转换进度: 2 / 32   fileKey：package-lock
+转换进度: 3 / 32   fileKey：package
+转换进度: 4 / 32   fileKey：pages/dasai/dasai
+转换进度: 5 / 32   fileKey：pages/hangqing/hangqing
+转换进度: 6 / 32   fileKey：pages/jiaoyi/jiaoyi
+转换进度: 7 / 32   fileKey：pages/list/list
+转换进度: 8 / 32   fileKey：pages/loginByPhone/loginByPhone
+转换进度: 9 / 32   fileKey：pages/logs/logs
+转换进度: 10 / 32   fileKey：pages/shouye/shouye
+[WARN] 文件 pages/images/头像.png 不存在，但仍然对路径进行转换为相对于static目录，运行时需注意！   fileKey: pages/shouye/shouye
+转换进度: 11 / 32   fileKey：pages/stockInfo/stockInfo
+转换进度: 12 / 32   fileKey：pages/zixuan/zixuan
+转换进度: 13 / 32   fileKey：project.config
+转换进度: 14 / 32   fileKey：project.private.config
+转换进度: 15 / 32   fileKey：sitemap
+转换进度: 16 / 32   fileKey：utils/util
+开始二次遍历及生成vue文件
+转换进度: 17 / 32   fileKey：app
+转换进度: 18 / 32   fileKey：package-lock
+转换进度: 19 / 32   fileKey：package
+转换进度: 20 / 32   fileKey：pages/dasai/dasai
+转换进度: 21 / 32   fileKey：pages/hangqing/hangqing
+转换进度: 22 / 32   fileKey：pages/jiaoyi/jiaoyi
+转换进度: 23 / 32   fileKey：pages/list/list
+转换进度: 24 / 32   fileKey：pages/loginByPhone/loginByPhone
+转换进度: 25 / 32   fileKey：pages/logs/logs
+转换进度: 26 / 32   fileKey：pages/shouye/shouye
+转换进度: 27 / 32   fileKey：pages/stockInfo/stockInfo
+转换进度: 28 / 32   fileKey：pages/zixuan/zixuan
+转换进度: 29 / 32   fileKey：project.config
+转换进度: 30 / 32   fileKey：project.private.config
+转换进度: 31 / 32   fileKey：sitemap
+转换进度: 32 / 32   fileKey：utils/util
+write pages.json success!
+write manifest.json success!
+write main.js success!
+write package.json success!
+
+
+统计信息：
+
+Component数量: 1
+Page数量: 6
+支付api数量: 0
+登录api数量: 1
+chooseMedia数量: 0
+getLocation数量: 0
+getRelationNodes数量: 0
+<ad/>数量: 0
+<map/>数量: 0
+<video/>数量: 0
+Vant组件: ， 数量：0
+
+项目转换完成！
+用时: 3.363s
+工具版本：v2.2.6
+在该小程序项目的同级目录可以看到_uni结尾的项目，即是转换好的uniapp项目，相关日志在该目录里。
+
+使用说明：
+    1.因各种原因，本工具并非100%完美转换！部分语法仍需人工处理！
+    2.工具转换原理及说明文档参考：https://l4rz4zwpx7.k.topthink.com/@kmrvzg72lx/
+    3.如遇运行报错，请添加QQ群(五群：536178289)带图反馈或https://github.com/zhangdaren/miniprogram-to-uniapp提交Issue！
+    4.转换后请查阅_uni目录或_uni-cli目录里的 README.md 和 transform.log
+
+

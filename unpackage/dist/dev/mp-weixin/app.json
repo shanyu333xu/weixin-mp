@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/hangqing/hangqing",
+    "pages/shouye/shouye",
+    "pages/zixuan/zixuan",
+    "pages/jiaoyi/jiaoyi",
+    "pages/dasai/dasai",
+    "pages/loginByPhone/loginByPhone",
+    "pages/stockInfo/stockInfo"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "同花顺模拟炒股",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/shouye/shouye",
+        "iconPath": "static/pages/images/shouye.png",
+        "selectedIconPath": "static/pages/images/shouye.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/hangqing/hangqing",
+        "iconPath": "static/pages/images/hangqing.png",
+        "selectedIconPath": "static/pages/images/hangqing.png",
+        "text": "行情"
+      },
+      {
+        "pagePath": "pages/zixuan/zixuan",
+        "iconPath": "static/pages/images/zixuan.png",
+        "selectedIconPath": "static/pages/images/zixuan.png",
+        "text": "自选"
+      },
+      {
+        "pagePath": "pages/jiaoyi/jiaoyi",
+        "iconPath": "static/pages/images/jiaoyi.png",
+        "selectedIconPath": "static/pages/images/jiaoyi.png",
+        "text": "交易"
+      },
+      {
+        "pagePath": "pages/dasai/dasai",
+        "iconPath": "static/pages/images/dasai.png",
+        "selectedIconPath": "static/pages/images/dasai.png",
+        "text": "大赛"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "plugins": {},
+  "usingComponents": {}
+}

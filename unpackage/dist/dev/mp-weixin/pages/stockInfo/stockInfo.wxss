@@ -1,0 +1,170 @@
+
+.box {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+.top {
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+
+    margin-bottom: 10px;
+}
+.top-left {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+}
+.top-left-up {
+    padding-left: 5px;
+    text-align: left;
+    font-size: x-large;
+    font-weight: bolder;
+}
+.top-left-down {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    font-size: xx-small;
+    margin-left: 5px;
+    margin-right: 8px;
+    margin-top: 6px;
+}
+.top-right {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40px;
+}
+.top-right-up,
+.top-right-down {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+.wz {
+    font-size: small;
+    color: gray;
+    margin-right: 6px;
+}
+.sj {
+    font-size: xx-small;
+    margin-right: 12px;
+}
+.tapbox {
+    display: flex;
+    flex-direction: column;
+}
+.tabs {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width: 200px;
+}
+.tapdown {
+    display: flex;
+    flex-direction: row;
+}
+.chart {
+    width: 210px;
+    height: 220px;
+}
+.tapdown-right {
+    display: flex;
+    flex-direction: column;
+}
+.right-up {
+    border-bottom: 2px solid gray;
+}
+.label {
+    font-size: 13px;
+    text-align: left;
+}
+.sell,
+.buy {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: small;
+    width: 100%;
+}
+.value {
+    flex: 1;
+    text-align: right;
+    width: 50px;
+}
+.b-b {
+    font-size: 12px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+.nev {
+    color: green;
+}
+.pos {
+    color: red;
+}
+.selected {
+    font-size: medium;
+    font-weight: bolder;
+    border-bottom: 8rpx solid rgb(218, 149, 103);
+}
+.tab-item {
+    font-size: small;
+    font-weight: bolder;
+}
+.image {
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+}
+.share-button {
+    padding: 0; /* 去除按钮内边距 */
+    border: none; /* 去除按钮边框 */
+    background-color: transparent; /* 透明背景 */
+}
+.icon {
+    width: 25px; /* 图片宽度 */
+    height: 25px; /* 图片高度 */
+}
+.tab-bar {
+    display: flex;
+    height: 50px; /* 增加高度以容纳图标和文字 */
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.trade {
+    border: none;
+    color: #fff;
+    background-color: #d84a36;
+    border-radius: 15px;
+    padding: 10px 20px;
+}
+
+/* 导航栏中的每一项 */
+.tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* 文字标签样式 */
+.tab-text {
+    font-size: 12px;
+    margin-top: 2px;
+}
+

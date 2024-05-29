@@ -1,0 +1,23 @@
+<template>
+    <view>
+        <!-- logs.wxml -->
+        <scroll-view class="scrollarea" scroll-y type="list">
+            <!-- <block wx:for="{{logs}}" wx:key="timeStamp" wx:for-item="log">
+    <view class="log-item">{{index + 1}}. {{log.date}}</view>
+  </block> -->
+            <view class="container">
+                <view class="userinfo">
+                    <p>这是自选页面</p>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+</template>
+
+<script>
+export default {
+    props: ['data', 'compName'],
+    computed: {}
+};
+</script>
+<style></style>
