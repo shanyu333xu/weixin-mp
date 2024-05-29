@@ -48,21 +48,6 @@
       }
     },
     {
-      "path": "pages/about/about",
-      "type": "page",
-      "style": {
-        "navigationBarTitleText": "关于"
-      }
-    },
-    {
-      "path": "pages/index/index",
-      "type": "page",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTitleText": "首页"
-      }
-    },
-    {
       "path": "pages/market/market",
       "type": "page",
       "layout": "default",
