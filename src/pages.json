@@ -30,10 +30,10 @@
         "text": "首页"
       },
       {
-        "iconPath": "static/tabbar/example.png",
-        "selectedIconPath": "static/tabbar/exampleHL.png",
-        "pagePath": "pages/about/about",
-        "text": "关于"
+        "iconPath": "static/images/market.png",
+        "selectedIconPath": "static/images/market.png",
+        "pagePath": "pages/market/market",
+        "text": "行情"
       }
     ]
   },
@@ -60,6 +60,14 @@
       "style": {
         "navigationStyle": "custom",
         "navigationBarTitleText": "首页"
+      }
+    },
+    {
+      "path": "pages/market/market",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "行情"
       }
     }
   ],

@@ -6,12 +6,13 @@
 interface NavigateToOptions {
   url: "/pages/home/home" |
        "/pages/about/about" |
-       "/pages/index/index";
+       "/pages/index/index" |
+       "/pages/market/market";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-  url: "/pages/home/home" | "/pages/about/about"
+  url: "/pages/home/home" | "/pages/market/market"
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;
