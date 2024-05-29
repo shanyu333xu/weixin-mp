@@ -50,6 +50,12 @@ export default defineUniPages({
         pagePath: 'pages/trade/trade',
         text: '交易',
       },
+      {
+        iconPath: 'static/images/contest.png',
+        selectedIconPath: 'static/images/contest.png',
+        pagePath: 'pages/contest/contest',
+        text: '大赛',
+      },
     ],
   },
 })
