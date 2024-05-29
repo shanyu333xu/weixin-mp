@@ -1,13 +1,19 @@
 Page({
   data: {
+    zixuanImage: '/pages/images/zixuanshanchu.png', // 初始自选图片路径
+    isFavorite: true, // 初始自选状态
     stockData: {}, // 存储原始股票信息的对象
     dataArray: {}, // 存储格式化后的股票信息的对象
     currentChart: '', // 当前显示的图表链接
     stockCode: '688523', // 股票代码
     currentTab: 'min' // 当前选中的页签，默认为分钟图
   },
+/**
+   * 用户点击右上角分享
+   */
 
   onLoad: function() {
+     
     // 设置当前页面导航栏标题
     wx.setNavigationBarTitle({
       title: '航天环宇（688523）'
@@ -15,7 +21,37 @@ Page({
     // 请求股票数据
     this.requestStockData();
   },
-
+  handleFavoriteTap() {
+    if (this.data.isFavorite) {
+      wx.showModal({
+        title: '取消自选',
+        content: '确定取消自选？',
+        success: (res) => {
+          if (res.confirm) {
+            this.setData({
+              isFavorite: false,
+              zixuanImage: '/pages/images/zixuan.png'
+            });
+            wx.showToast({
+              title: '已取消自选',
+              icon: 'success',
+              duration: 2000
+            });
+          }
+        }
+      });
+    } else {
+      this.setData({
+        isFavorite: true,
+        zixuanImage: '/pages/images/zixuanshanchu.png'
+      });
+      wx.showToast({
+        title: '已添加到自选',
+        icon: 'success',
+        duration: 2000
+      });
+    }
+  },
   // 请求股票数据
   requestStockData: function() {
     wx.request({
@@ -61,7 +97,17 @@ Page({
     };
     return formattedData;
   },
-
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '转发自选股票页面',
+      path: '/pages/stockInfo/stockInfo.wxml',
+      // imageUrl: '/pages/images/fenxiang.png'  // 自定义分享图片
+    }
+  },
   // 切换图表页签
   switchTab: function(e) {
     // 获取当前点击的页签
@@ -81,5 +127,6 @@ Page({
       currentChart: chartUrl
     });
   }
+  
 })
 

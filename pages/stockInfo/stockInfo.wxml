@@ -66,7 +66,7 @@
       
           <view class="sell">
             <view class="b-b label">卖5</view>
-            <view class="b-b value">{{stockData[29] == 0 ? '--' : stockData[29]}}</view>
+            <view class="b-b value ">{{stockData[29] == 0 ? '--' : stockData[29]}}</view>
             <view class="b-b value">{{stockData[28]/100}}</view>
           </view>
        
@@ -126,4 +126,17 @@
 
     </view>
   </view>
+
+
+ <view class="tab-bar">
+    <button class="tab-item trade" bindtap="navigateToTrade">交易</button>
+  <view class="tab-item" bindtap="handleFavoriteTap">
+      <image src="{{zixuanImage}}" class="icon" />
+      <text class="tab-text">自选</text>
+    </view>
+  <button class="share-button tab-item" open-type="share">
+    <image src="/pages/images/fenxiang.png" class="icon"></image>
+    <text class="tab-text">分享</text>
+  </button>
+</view>
 </view>
