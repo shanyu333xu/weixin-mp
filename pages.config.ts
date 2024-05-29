@@ -44,6 +44,12 @@ export default defineUniPages({
         pagePath: 'pages/favorites/favorites',
         text: '自选',
       },
+      {
+        iconPath: 'static/images/trade.png',
+        selectedIconPath: 'static/images/trade.png',
+        pagePath: 'pages/trade/trade',
+        text: '交易',
+      },
     ],
   },
 })

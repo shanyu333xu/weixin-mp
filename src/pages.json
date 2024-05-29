@@ -40,6 +40,12 @@
         "selectedIconPath": "static/images/add.png",
         "pagePath": "pages/favorites/favorites",
         "text": "自选"
+      },
+      {
+        "iconPath": "static/images/trade.png",
+        "selectedIconPath": "static/images/trade.png",
+        "pagePath": "pages/trade/trade",
+        "text": "交易"
       }
     ]
   },
@@ -67,6 +73,14 @@
       "layout": "default",
       "style": {
         "navigationBarTitleText": "行情"
+      }
+    },
+    {
+      "path": "pages/trade/trade",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "交易"
       }
     }
   ],

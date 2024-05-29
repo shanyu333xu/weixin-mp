@@ -6,12 +6,13 @@
 interface NavigateToOptions {
   url: "/pages/home/home" |
        "/pages/favorites/favorites" |
-       "/pages/market/market";
+       "/pages/market/market" |
+       "/pages/trade/trade";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-  url: "/pages/home/home" | "/pages/market/market" | "/pages/favorites/favorites"
+  url: "/pages/home/home" | "/pages/market/market" | "/pages/favorites/favorites" | "/pages/trade/trade"
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;
