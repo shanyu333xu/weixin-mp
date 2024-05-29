@@ -38,6 +38,12 @@ export default defineUniPages({
         pagePath: 'pages/market/market',
         text: '行情',
       },
+      {
+        iconPath: 'static/images/add.png',
+        selectedIconPath: 'static/images/add.png',
+        pagePath: 'pages/favorites/favorites',
+        text: '自选',
+      },
     ],
   },
 })
