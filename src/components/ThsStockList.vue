@@ -1,31 +1,132 @@
 <template>
   <!-- 股票列表 -->
-  <view class="stock-list">
+  <view class="stock_table">
     <!-- 表头 -->
-    <view class="stock-header">表头</view>
-    <!-- 内容 -->
-    <view class="stock-item" v-for="(item, index) in stocks" :key="index">
-      <navigator
-        :url="`/pages/stock-detail/stock-detail?code=${item.code}`"
-        open-type="navigate"
-        hover-class="navigator-hover"
-      >
-        <text>{{ item.name }}</text>
-        <text>{{ item.code }}</text>
-        <text>{{ item.price }}</text>
-        <text>{{ item.change }}</text>
-      </navigator>
+    <view class="stock_head" role="row">
+      <view class="stock_cell" role="columnheader">股票名称</view>
+      <view class="stock_cell right" role="columnheader">最新价</view>
+      <view class="stock_cell right" role="columnheader">涨跌幅</view>
+      <view class="stock_cell right" role="columnheader">涨速</view>
     </view>
+    <!-- 内容 -->
+    <navigator
+      class="stock_item"
+      v-for="(item, index) in limitedStocks"
+      :key="index"
+      :url="`/pages/stock-detail/stock-detail?code=${item.code}`"
+      open-type="navigate"
+      hover-class="navigator-hover"
+      :class="{
+        positive: parseFloat(item.change.replace('%', '')) > 0,
+        negative: parseFloat(item.change.replace('%', '')) < 0,
+      }"
+      role="row"
+    >
+      <view class="stock_cell" role="cell">
+        <view class="stock_name">{{ item.name }}</view>
+        <view class="stock_code">{{ item.code }}</view>
+      </view>
+      <view class="stock_cell right" role="cell">
+        <text class="stock_number">{{ item.price }}</text>
+      </view>
+      <view class="stock_cell right" role="cell">
+        <text class="stock_number">{{ item.change }}</text>
+      </view>
+      <view class="stock_cell right" role="cell">
+        <text class="stock_number">{{ item.speed }}</text>
+      </view>
+    </navigator>
   </view>
 </template>
 
 <script lang="ts" setup>
-// 定义props接收
-const props = defineProps<{
-  stocks
-}>()
-</script>
+import { defineProps, computed } from 'vue'
 
+interface Stock {
+  name: string
+  code: string
+  price: string
+  change: string
+  speed: string
+}
+
+const props = defineProps<{
+  stocks: Stock[]
+  maxRows?: number
+}>()
+
+// 计算属性，限制显示的行数
+const limitedStocks = computed(() => {
+  if (props.maxRows !== undefined) {
+    return props.stocks.slice(0, props.maxRows)
+  }
+  return props.stocks
+})
+</script>
 <style lang="scss" scoped>
-//
+.stock_table {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.stock_head {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.stock_item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  text-decoration: none;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.stock_item:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.stock_item:hover {
+  background-color: #e0e0e0;
+}
+
+.navigator-hover {
+  background-color: #d0d0d0;
+}
+
+.stock_cell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stock_name {
+  font-weight: bold;
+  text-align: left;
+}
+
+.stock_code {
+  color: #999;
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.positive .stock_number {
+  color: red;
+}
+
+.negative .stock_number {
+  color: green;
+}
 </style>
