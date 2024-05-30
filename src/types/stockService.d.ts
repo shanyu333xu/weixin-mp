@@ -31,7 +31,7 @@ export type OriStockData = {
   sell4Volume: string
   sell4Price: string
   sell5Volume: string
-  sell6Price: string
+  sell5Price: string
   date: string
   time: string
 }

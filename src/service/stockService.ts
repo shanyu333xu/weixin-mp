@@ -2,7 +2,7 @@
 
 import { OriStockData, StockData } from '@/types/stockService'
 
-export const fetchStockData = (stockCodes: string[]) => {
+export const fetchStockData = (stockCodes: string[]): Promise<StockData[]> => {
   const url = `http://hq.sinajs.cn/list=${stockCodes.join(',')}`
 
   return new Promise((resolve, reject) => {
@@ -24,40 +24,41 @@ export const fetchStockData = (stockCodes: string[]) => {
           const stockData: OriStockData = {
             name: elements[0],
             code: stockCode,
-            openPrice: elements[1],
-            closePrice: elements[2],
-            currentPrice: elements[3],
-            highPrice: elements[4],
-            lowPrice: elements[5],
-            buyPrice: elements[6],
-            sellPrice: elements[7],
+            openPrice: parseFloat(elements[1]).toFixed(2),
+            closePrice: parseFloat(elements[2]).toFixed(2),
+            currentPrice: parseFloat(elements[3]).toFixed(2),
+            highPrice: parseFloat(elements[4]).toFixed(2),
+            lowPrice: parseFloat(elements[5]).toFixed(2),
+            buyPrice: parseFloat(elements[6]).toFixed(2),
+            sellPrice: parseFloat(elements[7]).toFixed(2),
             volume: elements[8],
             amount: elements[9],
             buy1Volume: elements[10],
-            buy1Price: elements[11],
+            buy1Price: parseFloat(elements[11]).toFixed(2),
             buy2Volume: elements[12],
-            buy2Price: elements[13],
+            buy2Price: parseFloat(elements[13]).toFixed(2),
             buy3Volume: elements[14],
-            buy3Price: elements[15],
+            buy3Price: parseFloat(elements[15]).toFixed(2),
             buy4Volume: elements[16],
-            buy4Price: elements[17],
+            buy4Price: parseFloat(elements[17]).toFixed(2),
             buy5Volume: elements[18],
-            buy5Price: elements[19],
+            buy5Price: parseFloat(elements[19]).toFixed(2),
             sell1Volume: elements[20],
-            sell1Price: elements[21],
+            sell1Price: parseFloat(elements[21]).toFixed(2),
             sell2Volume: elements[22],
-            sell2Price: elements[23],
+            sell2Price: parseFloat(elements[23]).toFixed(2),
             sell3Volume: elements[24],
-            sell3Price: elements[25],
+            sell3Price: parseFloat(elements[25]).toFixed(2),
             sell4Volume: elements[26],
-            sell4Price: elements[27],
+            sell4Price: parseFloat(elements[27]).toFixed(2),
             sell5Volume: elements[28],
-            sell5Price: elements[29],
+            sell5Price: parseFloat(elements[29]).toFixed(2),
             date: elements[30],
             time: elements[31],
           }
           oriStockDataList.push(stockData)
         })
+
         const stockDataList: StockData[] = oriStockDataList.map((element) => {
           const change = (
             parseFloat(element.currentPrice) - parseFloat(element.closePrice)
@@ -78,6 +79,9 @@ export const fetchStockData = (stockCodes: string[]) => {
             speedPercent,
           }
         })
+
+        console.log(stockDataList)
+
         resolve(stockDataList)
       },
       fail: (error) => {
