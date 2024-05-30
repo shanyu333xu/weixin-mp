@@ -23,93 +23,20 @@
 
 <script lang="ts" setup>
 import ThsStockList from '@/components/ThsStockList.vue'
+import { StockData } from '@/types/stockService'
+import { fetchStockData } from '@/service/stockService'
 // 测试数据
-const stocks = [
-  {
-    name: '股票B',
-    code: '000001',
-    price: '10.00',
-    change: '-0.5%',
-    speed: '-0.1%',
-  },
-  {
-    name: '股票B',
-    code: '000001',
-    price: '10.00',
-    change: '-0.5%',
-    speed: '-0.1%',
-  },
-  {
-    name: '股票A',
-    code: '000001',
-    price: '10.00',
-    change: '+0.5%',
-    speed: '+0.1%',
-  },
-  {
-    name: '股票A',
-    code: '000001',
-    price: '10.00',
-    change: '+0.5%',
-    speed: '+0.1%',
-  },
-  {
-    name: '股票B',
-    code: '000001',
-    price: '10.00',
-    change: '-0.5%',
-    speed: '-0.1%',
-  },
-  {
-    name: '股票A',
-    code: '000001',
-    price: '10.00',
-    change: '+0.5%',
-    speed: '+0.1%',
-  },
-  {
-    name: '股票B',
-    code: '000001',
-    price: '10.00',
-    change: '-0.5%',
-    speed: '-0.1%',
-  },
-  {
-    name: '股票B',
-    code: '000001',
-    price: '10.00',
-    change: '-0.5%',
-    speed: '-0.1%',
-  },
-  {
-    name: '股票A',
-    code: '000001',
-    price: '10.00',
-    change: '+0.5%',
-    speed: '+0.1%',
-  },
-  {
-    name: '股票A',
-    code: '000001',
-    price: '10.00',
-    change: '+0.5%',
-    speed: '+0.1%',
-  },
-  {
-    name: '股票B',
-    code: '000001',
-    price: '10.00',
-    change: '-0.5%',
-    speed: '-0.1%',
-  },
-  {
-    name: '股票A',
-    code: '000001',
-    price: '10.00',
-    change: '+0.5%',
-    speed: '+0.1%',
-  },
-]
+const stocks = ref<StockData[]>([])
+const getStocks = async () => {
+  const stockCodes = ['sh601006', 'sh601001']
+  const stockData = await fetchStockData(stockCodes)
+  stocks.value = Object.values(stockData)
+  console.log(stockData)
+}
+
+onShow(() => {
+  getStocks()
+})
 </script>
 
 <style lang="scss" scoped>
