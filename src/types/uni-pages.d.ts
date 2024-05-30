@@ -8,6 +8,7 @@ interface NavigateToOptions {
        "/pages/contest/contest" |
        "/pages/favorites/favorites" |
        "/pages/market/market" |
+       "/pages/search/search" |
        "/pages/stock-detail/stock-detail" |
        "/pages/trade/trade";
 }

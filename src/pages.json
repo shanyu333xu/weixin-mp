@@ -90,6 +90,14 @@
       }
     },
     {
+      "path": "pages/search/search",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "同花顺模拟炒股"
+      }
+    },
+    {
       "path": "pages/stock-detail/stock-detail",
       "type": "page",
       "layout": "default",

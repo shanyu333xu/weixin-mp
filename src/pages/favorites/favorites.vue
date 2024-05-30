@@ -10,7 +10,7 @@
 <template>
   <!-- 搜索框,其实是跳转到搜索页面 -->
   <view>
-    <navigator url="/pages/" open-type="navigate" hover-class="navigator-hover">
+    <navigator url="/pages/search/search" open-type="navigate" hover-class="navigator-hover">
       <image src="" mode="scaleToFill" />
       <text>搜股票名称/股票代码</text>
     </navigator>
