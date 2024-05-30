@@ -27,31 +27,24 @@
         <view class="stock_code">{{ item.code }}</view>
       </view>
       <view class="stock_cell right" role="cell">
-        <text class="stock_number">{{ item.price }}</text>
+        <text class="stock_number">{{ item.currentPrice }}</text>
       </view>
       <view class="stock_cell right" role="cell">
-        <text class="stock_number">{{ item.change }}</text>
+        <text class="stock_number">{{ item.changePercent }}</text>
       </view>
       <view class="stock_cell right" role="cell">
-        <text class="stock_number">{{ item.speed }}</text>
+        <text class="stock_number">{{ item.speedPercent }}</text>
       </view>
     </navigator>
   </view>
 </template>
 
 <script lang="ts" setup>
+import { StockData } from '@/types/stockService'
 import { defineProps, computed } from 'vue'
 
-interface Stock {
-  name: string
-  code: string
-  price: string
-  change: string
-  speed: string
-}
-
 const props = defineProps<{
-  stocks: Stock[]
+  stocks: StockData[]
   maxRows?: number
 }>()
 
