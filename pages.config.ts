@@ -14,6 +14,8 @@ export default defineUniPages({
       '^wd-(.*)': 'wot-design-uni/components/wd-$1/wd-$1.vue',
       '^(?!z-paging-refresh|z-paging-load-more)z-paging(.*)':
         'z-paging/components/z-paging$1/z-paging$1.vue',
+      // 引入以Ths开头的组件, 在src\components文件夹中查找引入(需要重启服务器)
+      '^Ths(.*)': '@/components/Ths$1.vue',
     },
   },
   tabBar: {
