@@ -24,7 +24,7 @@
     <!-- 内容 -->
     <view class="stock-item" v-for="(item, index) in stocks" :key="index">
       <navigator
-        :url="`/pages/stock-detail?code=${item.code}`"
+        :url="`/pages/stock-detail/stock-detail?code=${item.code}`"
         open-type="navigate"
         hover-class="navigator-hover"
       >

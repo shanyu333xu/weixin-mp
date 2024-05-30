@@ -90,6 +90,14 @@
       }
     },
     {
+      "path": "pages/stock-detail/stock-detail",
+      "type": "page",
+      "layout": "default",
+      "style": {
+        "navigationBarTitleText": "股票名称"
+      }
+    },
+    {
       "path": "pages/trade/trade",
       "type": "page",
       "layout": "default",
