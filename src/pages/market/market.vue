@@ -34,23 +34,95 @@
       </view>
     </view>
   </view>
-  <ThsStockList :stocks="stocks" />
+  <ThsStockList :stocks="stocks" :maxRows="10" />
 </template>
 
 <script lang="ts" setup>
 import ThsStockList from '@/components/ThsStockList.vue'
 const stocks = [
   {
+    name: '股票B',
+    code: '000001',
+    price: '10.00',
+    change: '-0.5%',
+    speed: '-0.1%',
+  },
+  {
+    name: '股票B',
+    code: '000001',
+    price: '10.00',
+    change: '-0.5%',
+    speed: '-0.1%',
+  },
+  {
     name: '股票A',
     code: '000001',
     price: '10.00',
     change: '+0.5%',
+    speed: '+0.1%',
+  },
+  {
+    name: '股票A',
+    code: '000001',
+    price: '10.00',
+    change: '+0.5%',
+    speed: '+0.1%',
   },
   {
     name: '股票B',
-    code: '000002',
-    price: '20.50',
-    change: '-1.2%',
+    code: '000001',
+    price: '10.00',
+    change: '-0.5%',
+    speed: '-0.1%',
+  },
+  {
+    name: '股票A',
+    code: '000001',
+    price: '10.00',
+    change: '+0.5%',
+    speed: '+0.1%',
+  },
+  {
+    name: '股票B',
+    code: '000001',
+    price: '10.00',
+    change: '-0.5%',
+    speed: '-0.1%',
+  },
+  {
+    name: '股票B',
+    code: '000001',
+    price: '10.00',
+    change: '-0.5%',
+    speed: '-0.1%',
+  },
+  {
+    name: '股票A',
+    code: '000001',
+    price: '10.00',
+    change: '+0.5%',
+    speed: '+0.1%',
+  },
+  {
+    name: '股票A',
+    code: '000001',
+    price: '10.00',
+    change: '+0.5%',
+    speed: '+0.1%',
+  },
+  {
+    name: '股票B',
+    code: '000001',
+    price: '10.00',
+    change: '-0.5%',
+    speed: '-0.1%',
+  },
+  {
+    name: '股票A',
+    code: '000001',
+    price: '10.00',
+    change: '+0.5%',
+    speed: '+0.1%',
   },
 ]
 const marketStatus = ref('')
