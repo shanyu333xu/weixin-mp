@@ -34,73 +34,85 @@
       </view>
     </view>
   </view>
+  <ThsStockList :stocks="stocks" />
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      marketStatus: '',
-      marketStatusIcon: '',
-      marketTime: '',
-      szIndex: {},
-      szcIndex: {},
-      cybIndex: {},
-    }
+<script lang="ts" setup>
+import ThsStockList from '@/components/ThsStockList.vue'
+const stocks = [
+  {
+    name: '股票A',
+    code: '000001',
+    price: '10.00',
+    change: '+0.5%',
   },
-  methods: {
-    async fetchData() {
-      try {
-        const res = await uni.request({
-          url: 'https://hq.sinajs.cn/list=sh000001,sz399001,sz399006',
-          method: 'GET',
-        })
-        const data = res.data
-        this.szIndex = this.parseIndexData(data.split(';')[0])
-        this.szcIndex = this.parseIndexData(data.split(';')[1])
-        this.cybIndex = this.parseIndexData(data.split(';')[2])
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
-    },
-    parseIndexData(dataStr) {
-      const data = dataStr.split(',')
-      const price = parseFloat(data[3])
-      const prevClose = parseFloat(data[2])
-      const change = (price - prevClose).toFixed(2)
-      const changePercent = ((change / prevClose) * 100).toFixed(2)
-      return { price: price.toFixed(2), change, changePercent }
-    },
-    updateMarketStatus() {
-      const now = new Date()
-      const hours = now.getHours()
-      const minutes = now.getMinutes()
-      const isOpen = (hours > 9 || (hours === 9 && minutes >= 30)) && hours < 15
-      const days = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-      const dayOfWeek = days[now.getDay()]
+  {
+    name: '股票B',
+    code: '000002',
+    price: '20.50',
+    change: '-1.2%',
+  },
+]
+const marketStatus = ref('')
+const marketStatusIcon = ref('')
+const marketTime = ref('')
+const szIndex = ref({})
+const szcIndex = ref({})
+const cybIndex = ref({})
 
-      if (isOpen) {
-        this.marketStatus = '开盘'
-        this.marketStatusIcon = '/static/images/open.png' // 使用静态图标
-        this.marketTime = now.toLocaleTimeString() + ` ${dayOfWeek}`
-      } else {
-        this.marketStatus = '闭盘'
-        this.marketStatusIcon = '/static/images/close.png' // 使用静态图标
-        const nextOpen = new Date(now)
-        nextOpen.setDate(now.getDate() + (now.getDay() === 5 ? 3 : 1)) // 如果是周五，加3天，否则加1天
-        nextOpen.setHours(9, 30, 0, 0)
-        this.marketTime = `下次开盘: ${nextOpen.toLocaleString()} ${days[nextOpen.getDay()]}`
-      }
-    },
-  },
-  mounted() {
-    this.fetchData()
-    this.updateMarketStatus()
-    setInterval(() => {
-      this.updateMarketStatus()
-    }, 60000) // 每分钟更新一次状态
-  },
+const fetchData = async () => {
+  try {
+    const res = await uni.request({
+      url: 'https://hq.sinajs.cn/list=sh000001,sz399001,sz399006',
+      method: 'GET',
+    })
+    const data = res.data
+    szIndex.value = parseIndexData(data.split(';')[0])
+    szcIndex.value = parseIndexData(data.split(';')[1])
+    cybIndex.value = parseIndexData(data.split(';')[2])
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
 }
+
+const parseIndexData = (dataStr) => {
+  const data = dataStr.split(',')
+  const price = parseFloat(data[3])
+  const prevClose = parseFloat(data[2])
+  const change = (price - prevClose).toFixed(2)
+  const changePercent = ((change / prevClose) * 100).toFixed(2)
+  return { price: price.toFixed(2), change, changePercent }
+}
+
+const updateMarketStatus = () => {
+  const now = new Date()
+  const hours = now.getHours()
+  const minutes = now.getMinutes()
+  const isOpen = (hours > 9 || (hours === 9 && minutes >= 30)) && hours < 15
+  const days = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+  const dayOfWeek = days[now.getDay()]
+
+  if (isOpen) {
+    marketStatus.value = '开盘'
+    marketStatusIcon.value = '/static/images/open.png'
+    marketTime.value = now.toLocaleTimeString() + ` ${dayOfWeek}`
+  } else {
+    marketStatus.value = '闭盘'
+    marketStatusIcon.value = '/static/images/close.png'
+    const nextOpen = new Date(now)
+    nextOpen.setDate(now.getDate() + (now.getDay() === 5 ? 3 : 1))
+    nextOpen.setHours(9, 30, 0, 0)
+    marketTime.value = `下次开盘: ${nextOpen.toLocaleString()} ${days[nextOpen.getDay()]}`
+  }
+}
+
+onMounted(() => {
+  fetchData()
+  updateMarketStatus()
+  setInterval(() => {
+    updateMarketStatus()
+  }, 60000) // 每分钟更新一次状态
+})
 </script>
 
 <style>
