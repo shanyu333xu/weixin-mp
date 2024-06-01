@@ -12,17 +12,17 @@
     <view class="top">
       <view class="top-left">
         <view class="top-left-up">
-          <text :class="Number(stock.speedPercent) < 0 ? 'nev' : 'pos'">
+          <text :class="stock.speedPercent < 0 ? 'nev' : 'pos'">
             {{ stock.currentPrice }}
           </text>
         </view>
         <view class="top-left-down">
-          <text :class="Number(stock.speedPercent) < 0 ? 'nev' : 'pos'">
-            <text v-if="Number(stock.changePercent) >= 0">+</text>
-            {{ stock.changePercent }}
+          <text :class="stock.speedPercent < 0 ? 'nev' : 'pos'">
+            <text v-if="stock.changePercent >= 0">+</text>
+            {{ stock.changePercent }}%
           </text>
-          <text :class="Number(stock.speedPercent) < 0 ? 'nev' : 'pos'">
-            <text v-if="Number(stock.speedPercent) >= 0">+</text>
+          <text :class="stock.speedPercent < 0 ? 'nev' : 'pos'">
+            <text v-if="stock.speedPercent >= 0">+</text>
             {{ stock.speedPercent }}%
           </text>
         </view>
@@ -40,7 +40,7 @@
           </view>
           <view class="up">
             <text class="wz">量</text>
-            <!-- <text class="sj">{{ (stock.volume / 10000).toFixed(1) }}万</text> -->
+            <text class="sj">{{ stock.volume }}万</text>
           </view>
         </view>
 
@@ -51,11 +51,11 @@
           </view>
           <view class="down">
             <text class="wz">换</text>
-            <text class="sj">{{ stock.change }}</text>
+            <text class="sj">{{ stock.change }}万</text>
           </view>
           <view class="down">
             <text class="wz">额</text>
-            <!-- <text class="sj">{{ (stock.amount / 100000000).toFixed(1) }}亿</text> -->
+            <text class="sj">{{ stock.amount }}亿</text>
           </view>
         </view>
       </view>
@@ -102,11 +102,7 @@
             <view class="sell" v-for="(item, index) in [5, 4, 3, 2, 1]" :key="index">
               <view class="b-b label">卖{{ item }}</view>
               <view class="b-b value">
-                {{
-                  Number(stock['sell' + item + 'Price']) == 0
-                    ? '--'
-                    : stock['sell' + item + 'Price']
-                }}
+                {{ stock['sell' + item + 'Price'] == 0 ? '--' : stock['sell' + item + 'Price'] }}
               </view>
               <view class="b-b value">{{ stock['sell' + item + 'Volume'] }}</view>
             </view>
@@ -162,44 +158,7 @@ import { fetchStockData } from '@/service/stockService'
 import { StockData } from '@/types/stockService'
 
 const props = defineProps<{ code: string }>()
-const stock = ref<StockData>({
-  name: '',
-  code: '',
-  openPrice: '',
-  closePrice: '',
-  currentPrice: '',
-  highPrice: '',
-  lowPrice: '',
-  buyPrice: '',
-  sellPrice: '',
-  volume: '',
-  amount: '',
-  buy1Volume: '',
-  buy1Price: '',
-  buy2Volume: '',
-  buy2Price: '',
-  buy3Volume: '',
-  buy3Price: '',
-  buy4Volume: '',
-  buy4Price: '',
-  buy5Volume: '',
-  buy5Price: '',
-  sell1Volume: '',
-  sell1Price: '',
-  sell2Volume: '',
-  sell2Price: '',
-  sell3Volume: '',
-  sell3Price: '',
-  sell4Volume: '',
-  sell4Price: '',
-  sell5Volume: '',
-  sell5Price: '',
-  date: '',
-  time: '',
-  change: '',
-  changePercent: '',
-  speedPercent: '',
-})
+const stock = ref<StockData>()
 const currentTab = ref<string>('min')
 const zixuanImage = ref<string>('/static/pages/images/zixuanshanchu.png')
 const isFavorite = ref<boolean>(true)

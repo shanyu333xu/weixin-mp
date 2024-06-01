@@ -17,8 +17,8 @@
       open-type="navigate"
       hover-class="navigator-hover"
       :class="{
-        positive: parseFloat(item.change.replace('%', '')) > 0,
-        negative: parseFloat(item.change.replace('%', '')) < 0,
+        positive: item.change > 0,
+        negative: item.change < 0,
       }"
       role="row"
     >
@@ -30,10 +30,10 @@
         <text class="stock_number">{{ item.currentPrice }}</text>
       </view>
       <view class="stock_cell right" role="cell">
-        <text class="stock_number">{{ item.changePercent }}</text>
+        <text class="stock_number">{{ item.changePercent }}%</text>
       </view>
       <view class="stock_cell right" role="cell">
-        <text class="stock_number">{{ item.speedPercent }}</text>
+        <text class="stock_number">{{ item.speedPercent }}%</text>
       </view>
     </navigator>
   </view>
