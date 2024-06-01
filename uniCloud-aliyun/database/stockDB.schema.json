@@ -1,0 +1,27 @@
+{
+  "bsonType": "object",
+  "required": [],
+  "permission": {
+    "read": true,
+    "create": "auth.uid!=null",
+    "update": "doc.userid == auth.uid",
+    "delete": false
+  },
+  "properties": {
+    "_id": {
+      "description": "ID，系统自动生成"
+    },
+    "userid":{
+        "bsonType": "string",
+        "title": "用户id",
+        "foreignKey": "uni-id-users._id",
+        "defaultValue":{
+            "$env": "uid"
+        }
+    },
+    "stockid":{
+        "bsonType": "string",
+        "title": "股票id"
+    }
+  }
+}
