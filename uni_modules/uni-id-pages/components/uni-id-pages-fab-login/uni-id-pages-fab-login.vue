@@ -57,11 +57,7 @@
 						"logo": "/uni_modules/uni-id-pages/static/login/uni-fab-login/sms.png",
 						"path": "/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=smsCode"
 					},
-					{
-						"id": "weixin",
-						"text": "微信登录",
-						"logo": "/uni_modules/uni-id-pages/static/login/uni-fab-login/weixin.png",
-					},
+				
 					// #ifndef MP-WEIXIN
 					{
 						"id": "apple",

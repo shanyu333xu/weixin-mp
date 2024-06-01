@@ -54,6 +54,7 @@
 				"logo": "/static/logo.png"
 			}
 		},
+        
 		onShow() {
 			// #ifdef H5
 			document.onkeydown = event => {
@@ -65,6 +66,7 @@
 			// #endif
 		},
 		methods: {
+         
 			// 页面跳转，找回密码
 			toRetrievePwd() {
 				let url = '/uni_modules/uni-id-pages/pages/retrieve/retrieve'

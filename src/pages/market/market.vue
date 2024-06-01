@@ -1,5 +1,15 @@
 <template>
   <view class="container">
+      <view class="navigation-bar">
+          <image
+            src="@/static/images/login.png"
+            class="nav-bar-logo"
+            @click="navigateToLogin"
+          />
+          <text class="nav-bar-title">{{ title }}</text>
+         
+          <view class="nav-bar-placeholder"></view>
+        </view>
     <view class="market-status">
       <image :src="marketStatusIcon" class="status-icon"></image>
       <text class="status-text">{{ marketStatus }}</text>
@@ -36,15 +46,27 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
+
 import ThsStockList from '../../components/ThsStockList.vue'
 import { fetchStockData } from '../../service/stockService'
 import { StockData } from '../../types/stockService'
 
+const title = ref('');
+const navigateToLogin = () => {
+  uni.navigateTo({
+    url: '/uni_modules/uni-id-pages/pages/login/login-withpwd'
+  });
+};
 const szIndex = ref<StockData | null>(null)
 const szcIndex = ref<StockData | null>(null)
 const cybIndex = ref<StockData | null>(null)
 const stocks = ref<StockData[] | null>([])
-
+// onMounted(() => {
+//   // 隐藏默认导航栏
+//   uni.setNavigationBarTitle({
+//     title: '',
+//   });
+// });
 const getStocks = async () => {
   try {
     const stockCodes = [
@@ -117,6 +139,32 @@ onMounted(async () => {
 </script>
 
 <style>
+   .navigation-bar {
+     display: flex;
+     align-items: center;
+     justify-content: center; /* 使内容在水平方向上居中 */
+     padding: 10px;
+     background-color: #fff;
+     position: relative;
+   }
+   .nav-bar-logo {
+     width: 30px;
+     height: 30px;
+     position: absolute;
+     left: 10px; /* 调整图片的位置 */
+   }
+   .nav-bar-title {
+     font-size: 13px;
+     color: #333;
+     text-align: center;
+     flex: 1; /* 占据剩余空间以便居中 */
+   }
+   .nav-bar-placeholder {
+     width: 30px; /* 确保与 nav-bar-logo 宽度相同 */
+     height: 30px;
+     position: absolute;
+     right: 10px; /* 用于占位 */
+   }
 .container {
   padding: 10px;
 }

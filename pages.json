@@ -48,7 +48,7 @@
 ,{
     "path": "uni_modules/uni-id-pages/pages/login/login-withpwd",
     "style": {
-        "navigationBarTitleText": ""
+        "navigationBarTitleText": "使用账号密码登录"
     }
 }
 ,{
@@ -148,8 +148,9 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+         // "navigationStyle": "custom"
 	},
     
-         
+          
 	"uniIdRouter": {}
 }
