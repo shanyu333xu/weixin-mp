@@ -22,7 +22,6 @@
 </template>
 
 <script lang="ts" setup>
-import ThsStockList from '@/components/ThsStockList.vue'
 import { StockData } from '@/types/stockService'
 import { fetchStockData } from '@/service/stockService'
 // 测试数据

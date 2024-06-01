@@ -45,7 +45,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import ThsStockList from '@/components/ThsStockList.vue'
 import { fetchStockData } from '@/service/stockService'
 import { StockData } from '@/types/stockService'
 
