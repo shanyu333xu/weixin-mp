@@ -59,23 +59,40 @@
       :url="`/pages/stock-detail/stock-detail?code=${item.code}`"
       open-type="navigate"
       hover-class="navigator-hover"
-      :class="{
-        positive: item.change > 0,
-        negative: item.change < 0,
-      }"
       role="row"
     >
       <view class="stock_cell" role="cell">
         <view class="stock_name">{{ item.name }}</view>
         <view class="stock_code">{{ item.code }}</view>
       </view>
-      <view class="stock_cell right" role="cell">
+      <view
+        class="stock_cell right"
+        :class="{
+          positive: item.change > 0,
+          negative: item.change < 0,
+        }"
+        role="cell"
+      >
         <text class="stock_number">{{ item.currentPrice }}</text>
       </view>
-      <view class="stock_cell right" role="cell">
+      <view
+        class="stock_cell right"
+        :class="{
+          positive: item.changePercent > 0,
+          negative: item.changePercent < 0,
+        }"
+        role="cell"
+      >
         <text class="stock_number">{{ item.changePercent }}%</text>
       </view>
-      <view class="stock_cell right" role="cell">
+      <view
+        class="stock_cell right"
+        :class="{
+          positive: item.speedPercent > 0,
+          negative: item.speedPercent < 0,
+        }"
+        role="cell"
+      >
         <text class="stock_number">{{ item.speedPercent }}%</text>
       </view>
     </navigator>
