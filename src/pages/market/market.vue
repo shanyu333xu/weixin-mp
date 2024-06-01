@@ -1,12 +1,3 @@
-<!-- <route lang="json5" type="page">
-{
-  layout: 'default',
-  "style": {
-    navigationBarTitleText: '行情',
-  },
-}
-</route> -->
-
 <template>
   <view class="container">
     <view class="market-status">

@@ -14,6 +14,13 @@
             "navigationBarTitleText": "自选"
         }
     },
+    {
+        "path": "src/pages/stock-detail/stock-detail",
+        "style": {
+            "enablePullDownRefresh": false,
+            "navigationBarTitleText": "详情"
+        }
+    },
 {
     "path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
     "style": {
@@ -112,11 +119,37 @@
 }
 
 ],
+  "tabBar": {
+        "color": "#999999",
+        "selectedColor": "#018d71",
+        "backgroundColor": "#F8F8F8",
+        "borderStyle": "black",
+        "height": "50px",
+        "fontSize": "10px",
+        "iconWidth":" 24px",
+        "spacing": "3px",
+        "list": [
+            {
+              "iconPath": "static/images/market.png",
+              "selectedIconPath": "static/images/market.png",
+             "pagePath": "src/pages/market/market",
+              "text": "行情"
+            },
+          {
+            "iconPath": "static/images/add.png",
+            "selectedIconPath": "static/images/add.png",
+            "pagePath": "src/pages/favorites/favorites",
+           "text": "自选"
+          }
+          ]
+         },
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
+    
+         
 	"uniIdRouter": {}
 }

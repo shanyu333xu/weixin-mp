@@ -18,6 +18,7 @@
 import ThsStockList from '../../components/ThsStockList.vue'
 import { StockData } from '../../types/stockService'
 import { fetchStockData } from '../../service/stockService'
+import { ref } from 'vue';
 // 测试数据
 const stocks = ref<StockData[]>([])
 const getStocks = async () => {
