@@ -21,6 +21,13 @@
             "navigationBarTitleText": "详情"
         }
     },
+    {
+        "path": "src/pages/news-detail/news-detail",
+        "style": {
+            "enablePullDownRefresh": false,
+            "navigationBarTitleText": "新闻内容"
+        }
+    },
 {
     "path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
     "style": {
@@ -150,7 +157,12 @@
 		"backgroundColor": "#F8F8F8"
          // "navigationStyle": "custom"
 	},
-    
-          
+    "easycom": {
+      "autoscan": true,
+      "custom": {
+        "^uni-(.*)": "@/components/uni-$1.vue",
+        "^vue-file-(.*)": "packageName/path/to/vue-file-$1.vue" 
+      }
+      },    
 	"uniIdRouter": {}
 }

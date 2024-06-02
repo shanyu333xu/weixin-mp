@@ -1,13 +1,9 @@
-
-
 <template>
-  <view class="">股票详情</view>
+<view>股票详情</view>
+<NewsList/>
 </template>
-
-<script lang="ts" setup>
-//
+<script>
 </script>
-
-<style lang="scss" scoped>
-//
+<style>
 </style>
+        

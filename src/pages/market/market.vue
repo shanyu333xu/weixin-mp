@@ -1,15 +1,7 @@
 <template>
   <view class="container">
-      <view class="navigation-bar">
-          <image
-            src="@/static/images/login.png"
-            class="nav-bar-logo"
-            @click="navigateToLogin"
-          />
-          <text class="nav-bar-title">{{ title }}</text>
-         
-          <view class="nav-bar-placeholder"></view>
-        </view>
+    
+        <NavigationBar></NavigationBar>
     <view class="market-status">
       <image :src="marketStatusIcon" class="status-icon"></image>
       <text class="status-text">{{ marketStatus }}</text>
@@ -47,16 +39,11 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 
-import ThsStockList from '../../components/ThsStockList.vue'
+
 import { fetchStockData } from '../../service/stockService'
 import { StockData } from '../../types/stockService'
 
-const title = ref('');
-const navigateToLogin = () => {
-  uni.navigateTo({
-    url: '/uni_modules/uni-id-pages/pages/login/login-withpwd'
-  });
-};
+
 const szIndex = ref<StockData | null>(null)
 const szcIndex = ref<StockData | null>(null)
 const cybIndex = ref<StockData | null>(null)
