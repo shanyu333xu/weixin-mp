@@ -1,5 +1,6 @@
 <!-- 找回密码页 -->
 <template>
+    <BackButton></BackButton>
 	<view class="uni-content">
 		<match-media :min-width="690">
 		<view class="login-logo">

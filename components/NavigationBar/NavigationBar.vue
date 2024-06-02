@@ -1,20 +1,20 @@
 <template>
- <view class="navigation-bar">
-          <image
-            src="@/static/images/login.png"
-            class="nav-bar-logo"
-            @click="navigateToLogin"
-          />
-          <text class="nav-bar-title">{{ title }}</text>
-         
-          <view class="nav-bar-placeholder"></view>
-        </view>
+  <view class="navigation-bar">
+    <image
+      src="@/static/images/login.png"
+      class="nav-bar-logo"
+      @click="navigateToLogin"
+    />
+    <text class="nav-bar-title">{{ title }}</text>
+    <view class="nav-bar-placeholder"></view>
+  </view>
 </template>
 
 <script lang="ts" setup>
-    import { ref } from 'vue';
-
-const title = ref('');
+    import { defineProps } from 'vue';
+   const props = defineProps<{
+      title: string
+    }>();
 const navigateToLogin = () => {
   uni.navigateTo({
     url: '/uni_modules/uni-id-pages/pages/login/login-withpwd'
@@ -26,7 +26,7 @@ const navigateToLogin = () => {
 .navigation-bar {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 24px;
   background-color: #fff;
 }
 .nav-bar-logo {
@@ -35,7 +35,7 @@ const navigateToLogin = () => {
   margin-right: 10px;
 }
 .nav-bar-title {
-  font-size: 13px;
+  font-size: 15px;
   color: #333;
   text-align: center;
 }

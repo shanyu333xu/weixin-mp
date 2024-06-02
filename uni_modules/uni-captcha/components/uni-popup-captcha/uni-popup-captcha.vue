@@ -1,4 +1,5 @@
 <template>
+     
 	<uni-popup ref="popup" type="center">
 		<view class="popup-captcha">
 			<view class="content">

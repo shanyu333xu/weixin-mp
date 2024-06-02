@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-        <NavigationBar></NavigationBar>
+        <NavigationBar title="行情"></NavigationBar>
     <view class="market-status">
       <image :src="marketStatusIcon" class="status-icon"></image>
       <text class="status-text">{{ marketStatus }}</text>

@@ -1,11 +1,12 @@
 <!-- 免密登录页 -->
 <template>
+     <BackButton></BackButton>
 	<view class="uni-content">
 		<view class="login-logo">
 			<image :src="logo"></image>
 		</view>
 		<!-- 顶部文字 -->
-		<text class="title">请选择登录方式</text>
+		<text class="title">请输入手机号码</text>
 		<!-- 快捷登录框 当url带参数时有效 -->
 		<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
 			<text class="tip">将根据第三方账号服务平台的授权范围获取你的信息</text>

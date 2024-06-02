@@ -1,8 +1,10 @@
 <template>
+    <StockDetailNav  :title="stock.name" :code="stock.code"></StockDetailNav>
   <view class="box">
     <view class="top">
       <view class="top-left">
         <view class="top-left-up">
+            
           <text :class="stock.speedPercent < 0 ? 'nev' : 'pos'">
             {{ stock.currentPrice }}
           </text>
@@ -151,7 +153,6 @@ const currentChart = ref(`http://image.sinajs.cn/newchart/min/n/sh${props.code}.
 
 function switchTab(e) {
   const tab = e.currentTarget.dataset.tab
-  console.log("----tab----"+tab)
   const chartUrls = {
     daily: `http://image.sinajs.cn/newchart/daily/n/${props.code}.gif`,
     min: `http://image.sinajs.cn/newchart/min/n/${props.code}.gif`,
@@ -160,8 +161,6 @@ function switchTab(e) {
   }
   currentTab.value = tab
   currentChart.value = chartUrls[tab]
-
-    console.log("----currentChart.value----"+chartUrls[tab])
 }
 
 onMounted(async () => {

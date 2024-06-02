@@ -1,5 +1,6 @@
 <!-- 短信验证码登录页 -->
 <template>
+       <BackButton></BackButton>
 	<view class="uni-content">
 		<view class="login-logo">
 			<image :src="logo"></image>

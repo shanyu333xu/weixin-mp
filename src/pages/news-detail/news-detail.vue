@@ -1,4 +1,5 @@
 <template>
+    <BackButton/>
     <view class="detail">
     	<view>			
     		<view class="title">{{title}}</view>
