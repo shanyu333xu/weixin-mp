@@ -1,36 +1,44 @@
 <template>
-  <!-- 搜索框,其实是跳转到搜索页面 -->
+  <view class="navigation-bar"></view>
   <view>
+    <text>搜索栏</text>
     <navigator url="/pages/search/search" open-type="navigate" hover-class="navigator-hover">
-      <image src="" mode="scaleToFill" />
       <text>搜股票名称/股票代码</text>
     </navigator>
   </view>
-  <!-- 消息栏 -->
-  <view>消息栏</view>
-  <!-- 自选列表 -->
+
   <ThsStockList :stocks="stocks" />
 </template>
 
-<script lang="ts" setup>
+<script>
+import { fetchStockData } from '../../service/stockService';
 
-import { StockData } from '../../types/stockService'
-import { fetchStockData } from '../../service/stockService'
-import { ref } from 'vue';
-// 测试数据
-const stocks = ref<StockData[]>([])
-const getStocks = async () => {
-  const stockCodes = ['sh601006', 'sh601001']
-  const stockData = await fetchStockData(stockCodes)
-  stocks.value = Object.values(stockData)
-  console.log(stockData)
-}
-
-onShow(() => {
-  getStocks()
-})
+export default {
+  data() {
+    return {
+      stocks: [],
+    };
+  },
+  mounted() {
+    this.getStocks();
+  },
+  methods: {
+    async getStocks() {
+      //把提取stockDB中的stockid pop到stockCodes数组中
+      const stockCodes = ['sh601006'];
+      const stockData = await fetchStockData(stockCodes);
+      this.stocks = Object.values(stockData);
+      console.log(stockData);
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-//
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  padding: 29px;
+  background-color: #fff;
+}
 </style>

@@ -1,10 +1,9 @@
 <template>
-    <StockDetailNav  :title="stock.name" :code="stock.code"></StockDetailNav>
+  <StockDetailNav :title="stock.name" :code="stock.code"></StockDetailNav>
   <view class="box">
     <view class="top">
       <view class="top-left">
         <view class="top-left-up">
-            
           <text :class="stock.speedPercent < 0 ? 'nev' : 'pos'">
             {{ stock.currentPrice }}
           </text>
@@ -65,17 +64,17 @@
           <view
             :class="currentTab === 'daily' ? 'selected' : 'tab-item '"
             data-tab="daily"
-            @click="switchTab" >日k
+            @click="switchTab">日k
           </view>
           <view
-            :class="currentTab === 'weekly' ? 'selected' : 'tab-item'"
+            :class="currentTab === 'weekly' ? 'selected' : 'tab-item '"
             data-tab="weekly"
-            @click="switchTab"> 周K
+            @click="switchTab">周K
           </view>
           <view
-            :class="currentTab === 'monthly' ? 'selected' : 'tab-item'"
+            :class="currentTab === 'monthly' ? 'selected' : 'tab-item '"
             data-tab="monthly"
-            @click="switchTab"> 月K
+            @click="switchTab">月K
           </view>
         </view>
       </view>
@@ -126,8 +125,8 @@
 
     <view class="tab-bar">
       <button class="tab-item trade" @tap="navigateToTrade">交易</button>
-      <view class="tab-item" @tap="handleFavoriteTap">
-        <image :src="zixuanImage" class="icon" />
+      <view class="tab-item">
+        <image :src="favoriteIconSrc" class="icon" @click="handleFavoriteTap" />
         <text class="tab-text">自选</text>
       </view>
       <button class="share-button tab-item" open-type="share">
@@ -136,77 +135,126 @@
       </button>
     </view>
   </view>
-  <NewsList/>
+  <NewsList />
 </template>
 
-<script lang="ts" setup>
-import { ref,onMounted  } from 'vue';
-import { fetchStockData } from '../../service/stockService'
-import { StockData } from '../../types/stockService'
-
-const props = defineProps<{ code: string }>()
-const stock = ref<StockData>()
-const currentTab = ref<string>('min')
-const zixuanImage = ref<string>('/static/images/zixuan.png')
-const isFavorite = ref<boolean>(true)
-const currentChart = ref(`http://image.sinajs.cn/newchart/min/n/sh${props.code}.gif`);
-
-function switchTab(e) {
-  const tab = e.currentTarget.dataset.tab
-  const chartUrls = {
-    daily: `http://image.sinajs.cn/newchart/daily/n/${props.code}.gif`,
-    min: `http://image.sinajs.cn/newchart/min/n/${props.code}.gif`,
-    weekly: `http://image.sinajs.cn/newchart/weekly/n/${props.code}.gif`,
-    monthly: `http://image.sinajs.cn/newchart/monthly/n/${props.code}.gif`,
-  }
-  currentTab.value = tab
-  currentChart.value = chartUrls[tab]
-}
-
-onMounted(async () => {
-  try {
-    const stockData = await fetchStockData([props.code]);
-    stock.value = stockData[0];
-    currentChart.value = `http://image.sinajs.cn/newchart/min/n/sh${props.code}.gif`;
-  } catch (error) {
-    console.error('获取股票数据失败:', error);
-  }
-});
-function handleFavoriteTap() {
-  if (isFavorite.value) {
-    uni.showModal({
-      title: '取消自选',
-      content: '是否取消自选？',
-      success: (res) => {
-        if (res.confirm) {
-          isFavorite.value = false
-          zixuanImage.value = '/static/images/zixuan.png'
+<script>
+const db=uniCloud.database();
+import { fetchStockData } from '../../service/stockService';
+import {store} from '../../../uni_modules/uni-id-pages/common/store.js'
+import pageJson from "@/pages.json"
+export default {
+  props: ['code'],
+  data() {
+    return {
+    favoriteIconSrc: '/static/images/zixuan.png', // 默认显示未收藏的图标
+    isFavorite: false,
+    stock: {},
+    currentTab: 'min',
+    currentChart: `http://image.sinajs.cn/newchart/min/n/sh${this.code}.gif`,
+    };
+  },
+ 
+  methods: {
+    async loadStockData() {
+      try {
+        const stockData = await fetchStockData([this.code]);
+        this.stock = stockData[0];
+        
+        this.currentChart = `http://image.sinajs.cn/newchart/min/n/sh${this.code}.gif`;
+      } catch (error) {
+        console.error('获取股票数据失败:', error);
+      }
+    },
+    switchTab(e) {
+      const tab = e.currentTarget.dataset.tab;
+      const chartUrls = {
+        daily: `http://image.sinajs.cn/newchart/daily/n/${this.code}.gif`,
+        min: `http://image.sinajs.cn/newchart/min/n/${this.code}.gif`,
+        weekly: `http://image.sinajs.cn/newchart/weekly/n/${this.code}.gif`,
+        monthly: `http://image.sinajs.cn/newchart/monthly/n/${this.code}.gif`,
+      };
+      this.currentTab = tab;
+      this.currentChart = chartUrls[tab];
+    },
+    navigateToTrade() {
+      uni.navigateTo({
+        url: `/pages/trade/trade?code=${this.code}`,
+      });
+    },
+    async handleFavoriteTap() {
+        if(!store.hasLogin){
+        	uni.showModal({
+        		title:"登录后才可进行后续操作",
+        		success:res=>{
+        			if(res.confirm){
+        				uni.navigateTo({
+        					url:"/"+pageJson.uniIdRouter.loginPage
+        				})
+        			}
+        		}
+        	})
+        	return;
+        }		
+        let time=Date.now();
+        if(time - this.likeTime < 2000){
+        	uni.showToast({
+        		title:"操作太频繁，请稍后...",
+        		icon:"none"
+        	})
+        	return;
+        }	
+    let count= await db.collection("stockDB")
+	.where(`stockid=="${this.code}" && userid==$cloudEnv_uid`).count()				
+	if(count.result.total){
+	db.collection("stockDB").where(`stockid=="${this.code}" && userid==$cloudEnv_uid`)
+	.remove();
+     this.isFavorite = false;
+            this.setFavoriteState();
+              // 显示提示信息
+                    uni.showToast({
+                        title: "已删除",
+                        icon: "success"
+                    });
+	}else{
+	 db.collection("stockDB").add({
+    stockid:this.code,  
+        })	        
+      this.isFavorite = true;
+      this.setFavoriteState();
           uni.showToast({
-            title: '已取消自选',
-            icon: 'success',
-            duration: 2000,
-          })
-        }
-      },
-    })
-  } else {
-    isFavorite.value = true
-    zixuanImage.value = '/static/images/zixuanshanchu.png'
-    uni.showToast({
-      title: '已添加到自选',
-      icon: 'success',
-      duration: 2000,
-    })
-  }
-}
-
-
-
-function navigateToTrade() {
-  uni.navigateTo({
-    url: `/pages/trade/trade?code=${props.code}`,
-  })
-}
+                  title: "已添加",
+                  icon: "success"
+              });
+	}
+    },
+    setFavoriteState() {
+          if (this.isFavorite) {
+            this.favoriteIconSrc = "/static/images/zixuanshanchu.png";
+          } else {
+            this.favoriteIconSrc = "/static/images/zixuan.png";
+          }
+        },
+         async checkFavorite() {
+              // 检查收藏列表中是否存在该股票
+              const count = await db.collection("stockDB")
+                .where(`stockid=="${this.code}" && userid==$cloudEnv_uid`)
+                .count();
+        
+              // 根据数量判断用户是否已收藏该股票
+              if (count.result.total) {
+                this.isFavorite = true; // 标记已收藏
+                this.favoriteIconSrc = '/static/images/zixuanshanchu.png'; // 显示已收藏的图标
+                this.favoriteText = '已收藏'; // 显示已收藏的文字
+              }
+            },
+  },
+   mounted() {
+   this.loadStockData();
+         this.checkFavorite();
+      this.setFavoriteState();
+    }
+};
 </script>
 
 <style>
@@ -220,7 +268,6 @@ function navigateToTrade() {
   display: flex;
   flex-direction: row;
   height: 60px;
-
   margin-bottom: 10px;
 }
 
@@ -308,10 +355,12 @@ function navigateToTrade() {
 .right-up {
   border-bottom: 2px solid gray;
 }
+
 .label {
   font-size: 13px;
   text-align: left;
 }
+
 .sell,
 .buy {
   display: flex;
@@ -321,11 +370,13 @@ function navigateToTrade() {
   width: 100%;
   font-size: small;
 }
+
 .value {
   flex: 1;
   width: 50px;
   text-align: right;
 }
+
 .b-b {
   margin-bottom: 5px;
   margin-left: 10px;
@@ -350,20 +401,26 @@ function navigateToTrade() {
   font-size: small;
   font-weight: bolder;
 }
+
 .image {
   width: 25px;
   height: 25px;
   padding: 5px;
 }
+
 .share-button {
   padding: 0; /* 去除按钮内边距 */
   background-color: transparent; /* 透明背景 */
   border: none; /* 去除按钮边框 */
 }
+.share-button .icon{
+    margin-top: 5px;
+}
 .icon {
   width: 25px; /* 图片宽度 */
   height: 25px; /* 图片高度 */
 }
+
 .tab-bar {
   position: fixed;
   bottom: 0;
@@ -373,6 +430,7 @@ function navigateToTrade() {
   background-color: #ffffff;
   border-top: 1px solid #e0e0e0;
 }
+
 .trade {
   padding: 10px 20px;
   color: #fff;
@@ -380,6 +438,7 @@ function navigateToTrade() {
   border: none;
   border-radius: 15px;
 }
+
 /* 导航栏中的每一项 */
 .tab-item {
   display: flex;
@@ -389,10 +448,10 @@ function navigateToTrade() {
   justify-content: center;
   text-decoration: none;
 }
+
 /* 文字标签样式 */
 .tab-text {
   margin-top: 2px;
   font-size: 12px;
 }
 </style>
-
