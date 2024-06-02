@@ -4,7 +4,8 @@
       <view class="text">
         <view class="title">{{ item.title }}</view>
         <view class="info">
-          <span>{{ item.source }}</span>
+          <text>{{ item.source }}</text>
+            <text>{{ item.ptime }}</text>
         </view>
       </view>
     </view>
@@ -18,7 +19,7 @@ interface Article {
   docid: string;
   title: string;
   source: string;
-  // Add more properties if needed
+    ptime:string
 }
 
 const listArr = ref<Article[]>([]);
@@ -100,7 +101,7 @@ onMounted(() => {
   color: #888;
 }
 
-.info .text {
+.info text {
   padding-right: 20rpx;
 }
 </style>
