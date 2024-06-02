@@ -58,30 +58,22 @@
           <view
             :class="currentTab === 'min' ? 'selected' : 'tab-item '"
             data-tab="min"
-            @tap="switchTab"
-          >
-            分时
+            @click="switchTab">分时
           </view>
           <view
             :class="currentTab === 'daily' ? 'selected' : 'tab-item '"
             data-tab="daily"
-            @tap="switchTab"
-          >
-            日k
+            @click="switchTab" >日k
           </view>
           <view
             :class="currentTab === 'weekly' ? 'selected' : 'tab-item'"
             data-tab="weekly"
-            @tap="switchTab"
-          >
-            周K
+            @click="switchTab"> 周K
           </view>
           <view
             :class="currentTab === 'monthly' ? 'selected' : 'tab-item'"
             data-tab="monthly"
-            @tap="switchTab"
-          >
-            月K
+            @click="switchTab"> 月K
           </view>
         </view>
       </view>
@@ -155,13 +147,23 @@ const stock = ref<StockData>()
 const currentTab = ref<string>('min')
 const zixuanImage = ref<string>('/static/images/zixuan.png')
 const isFavorite = ref<boolean>(true)
-const currentChart = ref<string>(`http://image.sinajs.cn/newchart/min/n/sh${props.code}.gif`)
+const currentChart = ref(`http://image.sinajs.cn/newchart/min/n/sh${props.code}.gif`);
 
-// onShow(async () => {
-//   const stockData = await fetchStockData([props.code])
-//   stock.value = stockData[0]
-//   currentChart.value = `http://image.sinajs.cn/newchart/min/n/sh${props.code}.gif`
-// })
+function switchTab(e) {
+  const tab = e.currentTarget.dataset.tab
+  console.log("----tab----"+tab)
+  const chartUrls = {
+    daily: `http://image.sinajs.cn/newchart/daily/n/${props.code}.gif`,
+    min: `http://image.sinajs.cn/newchart/min/n/${props.code}.gif`,
+    weekly: `http://image.sinajs.cn/newchart/weekly/n/${props.code}.gif`,
+    monthly: `http://image.sinajs.cn/newchart/monthly/n/${props.code}.gif`,
+  }
+  currentTab.value = tab
+  currentChart.value = chartUrls[tab]
+
+    console.log("----currentChart.value----"+chartUrls[tab])
+}
+
 onMounted(async () => {
   try {
     const stockData = await fetchStockData([props.code]);
@@ -199,17 +201,7 @@ function handleFavoriteTap() {
   }
 }
 
-function switchTab(e) {
-  const tab = e.currentTarget.dataset.tab
-  const chartUrls = {
-    daily: `http://image.sinajs.cn/newchart/daily/n/sh${props.code}.gif`,
-    min: `http://image.sinajs.cn/newchart/min/n/sh${props.code}.gif`,
-    weekly: `http://image.sinajs.cn/newchart/weekly/n/sh${props.code}.gif`,
-    monthly: `http://image.sinajs.cn/newchart/monthly/n/sh${props.code}.gif`,
-  }
-  currentTab.value = tab
-  currentChart.value = chartUrls[tab]
-}
+
 
 function navigateToTrade() {
   uni.navigateTo({
