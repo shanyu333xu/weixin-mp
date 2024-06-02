@@ -1,43 +1,43 @@
-// src/types/stockService.d.ts
+// src/types/stockService.ts
 
-export type OriStockData = {
+export interface OriStockData {
   name: string
   code: string
-  openPrice: string
-  closePrice: string
-  currentPrice: string
-  highPrice: string
-  lowPrice: string
-  buyPrice: string
-  sellPrice: string
-  volume: string
-  amount: string
-  buy1Volume: string
-  buy1Price: string
-  buy2Volume: string
-  buy2Price: string
-  buy3Volume: string
-  buy3Price: string
-  buy4Volume: string
-  buy4Price: string
-  buy5Volume: string
-  buy5Price: string
-  sell1Volume: string
-  sell1Price: string
-  sell2Volume: string
-  sell2Price: string
-  sell3Volume: string
-  sell3Price: string
-  sell4Volume: string
-  sell4Price: string
-  sell5Volume: string
-  sell5Price: string
+  openPrice: number
+  closePrice: number
+  currentPrice: number
+  highPrice: number
+  lowPrice: number
+  buyPrice: number
+  sellPrice: number
+  volume: number
+  amount: number
+  buy1Volume: number
+  buy1Price: number
+  buy2Volume: number
+  buy2Price: number
+  buy3Volume: number
+  buy3Price: number
+  buy4Volume: number
+  buy4Price: number
+  buy5Volume: number
+  buy5Price: number
+  sell1Volume: number
+  sell1Price: number
+  sell2Volume: number
+  sell2Price: number
+  sell3Volume: number
+  sell3Price: number
+  sell4Volume: number
+  sell4Price: number
+  sell5Volume: number
+  sell5Price: number
   date: string
   time: string
 }
 
-export type StockData = OriStockData & {
-  change: string
-  changePercent: string
-  speedPercent: string
+export interface StockData extends OriStockData {
+  change: number
+  changePercent: number
+  speedPercent: number
 }

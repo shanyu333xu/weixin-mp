@@ -1,6 +1,5 @@
 <template>
   <view class="container">
-    
         <NavigationBar></NavigationBar>
     <view class="market-status">
       <image :src="marketStatusIcon" class="status-icon"></image>
@@ -48,12 +47,7 @@ const szIndex = ref<StockData | null>(null)
 const szcIndex = ref<StockData | null>(null)
 const cybIndex = ref<StockData | null>(null)
 const stocks = ref<StockData[] | null>([])
-// onMounted(() => {
-//   // 隐藏默认导航栏
-//   uni.setNavigationBarTitle({
-//     title: '',
-//   });
-// });
+
 const getStocks = async () => {
   try {
     const stockCodes = [

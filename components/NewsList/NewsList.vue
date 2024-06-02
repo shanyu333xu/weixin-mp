@@ -1,5 +1,6 @@
 <template>
   <view>
+      <view class="news">新闻</view>
     <view v-for="item in listArr" :key="item.docid" @click="goDetail(item.docid)" class="item">
       <view class="text">
         <view class="title">{{ item.title }}</view>
@@ -64,6 +65,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+    .news{
+        font-size: 18px;
+        font-weight: bolder;
+    }
 .content {
   padding: 30rpx;
 }
