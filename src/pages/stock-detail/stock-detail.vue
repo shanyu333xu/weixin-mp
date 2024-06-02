@@ -137,7 +137,7 @@
         <text class="tab-text">自选</text>
       </view>
       <button class="share-button tab-item" open-type="share">
-        <image src="/static/pages/images/fenxiang.png" class="icon"></image>
+        <image src="/static/images/fenxiang.png" class="icon"></image>
         <text class="tab-text">分享</text>
       </button>
     </view>
@@ -153,7 +153,7 @@ import { StockData } from '../../types/stockService'
 const props = defineProps<{ code: string }>()
 const stock = ref<StockData>()
 const currentTab = ref<string>('min')
-const zixuanImage = ref<string>('/static/pages/images/zixuanshanchu.png')
+const zixuanImage = ref<string>('/static/images/zixuan.png')
 const isFavorite = ref<boolean>(true)
 const currentChart = ref<string>(`http://image.sinajs.cn/newchart/min/n/sh${props.code}.gif`)
 
@@ -175,11 +175,11 @@ function handleFavoriteTap() {
   if (isFavorite.value) {
     uni.showModal({
       title: '取消自选',
-      content: '确定取消自选？',
+      content: '是否取消自选？',
       success: (res) => {
         if (res.confirm) {
           isFavorite.value = false
-          zixuanImage.value = '/static/pages/images/zixuan.png'
+          zixuanImage.value = '/static/images/zixuan.png'
           uni.showToast({
             title: '已取消自选',
             icon: 'success',
@@ -190,7 +190,7 @@ function handleFavoriteTap() {
     })
   } else {
     isFavorite.value = true
-    zixuanImage.value = '/static/pages/images/zixuanshanchu.png'
+    zixuanImage.value = '/static/images/zixuanshanchu.png'
     uni.showToast({
       title: '已添加到自选',
       icon: 'success',
