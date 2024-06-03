@@ -28,6 +28,13 @@
             "navigationBarTitleText": "新闻内容"
         }
     },
+    {
+        "path": "src/pages/trade/trade",
+        "style": {
+            "enablePullDownRefresh": false,
+            "navigationBarTitleText": "交易"
+        }
+    },
 {
     "path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
     "style": {

@@ -15,7 +15,7 @@ const props = defineProps<{
    code: string
 }>();
 
-const goBack = () => {
+const goBack = () => {          
   uni.navigateBack({
     delta: 1,
   });

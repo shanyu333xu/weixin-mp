@@ -1,6 +1,6 @@
 <!-- 免密登录页 -->
 <template>
-     <BackButton></BackButton>
+     <BackButton :goBackHandler="goBack"></BackButton>
 	<view class="uni-content">
 		<view class="login-logo">
 			<image :src="logo"></image>
@@ -28,8 +28,8 @@
 			<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>
 			<button class="uni-btn" type="primary" @click="toSmsPage">获取验证码</button>
 		</template>
-		<!-- 固定定位的快捷登录按钮 -->
-		<uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login>
+	<!-- 	固定定位的快捷登录按钮
+		<uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login> -->
 	</view>
 </template>
 
@@ -124,6 +124,11 @@
 			//#endif
 		},
 		methods: {
+               goBack() {
+                    uni.switchTab({
+                        url: '/src/pages/market/market'
+                    });
+                },
 			showCurrentWebview(){
 				// 恢复当前页面窗体的显示 一键登录，默认不显示当前窗口
 				currentWebview.setStyle({

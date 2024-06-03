@@ -3,22 +3,37 @@
     <view class="back-button">
       <image class="icon" @click="goBack" src="/static/images/back-arrow.png" />
     </view>
-    <text class="nav-bar-title">{{ title }} {{code}}</text>
+    <text class="nav-bar-title">{{ title }} {{ code }}</text>
   </view>
 </template>
 
-<script setup lang="ts">
-import { defineProps } from 'vue';
-
-const props = defineProps<{
-  title: string
-   code: string
-}>();
-
-const goBack = () => {
-  uni.navigateBack({
-    delta: 1,
-  });
+<script>
+export default {
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    code: {
+      type: String,
+      required: true
+    },
+    goBackHandler: {
+      type: Function,
+      required: false
+    }
+  },
+  methods: {
+    goBack() {
+      if (this.goBackHandler) {
+        this.goBackHandler();
+      } else {
+        uni.navigateBack({
+          delta: 1
+        });
+      }
+    }
+  }
 };
 </script>
 
@@ -36,7 +51,7 @@ const goBack = () => {
   display: flex;
   align-items: center;
   position: absolute;
-  left: 10px; /* Adjust this value to your preference */
+  left: 10px;
 }
 
 .icon {

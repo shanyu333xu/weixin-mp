@@ -124,7 +124,7 @@
     </view>
 
     <view class="tab-bar">
-      <button class="tab-item trade" @tap="navigateToTrade">交易</button>
+      <button :class="tradeClass" @click="navigateToTrade">交易</button>
       <view class="tab-item">
         <image :src="favoriteIconSrc" class="icon" @click="handleFavoriteTap" />
         <text class="tab-text">自选</text>
@@ -145,6 +145,11 @@ import {store} from '../../../uni_modules/uni-id-pages/common/store.js'
 import pageJson from "@/pages.json"
 export default {
   props: ['code'],
+   computed: {
+   tradeClass() {
+     return store.hasLogin ? 'trade' : 'trade disabled';
+   }
+ },
   data() {
     return {
     favoriteIconSrc: '/static/images/zixuan.png', // 默认显示未收藏的图标
@@ -154,13 +159,17 @@ export default {
     currentChart: `http://image.sinajs.cn/newchart/min/n/sh${this.code}.gif`,
     };
   },
- 
+ mounted() {
+ this.loadStockData();
+       this.checkFavorite();
+    this.setFavoriteState();
+  },
+
   methods: {
     async loadStockData() {
       try {
         const stockData = await fetchStockData([this.code]);
         this.stock = stockData[0];
-        
         this.currentChart = `http://image.sinajs.cn/newchart/min/n/sh${this.code}.gif`;
       } catch (error) {
         console.error('获取股票数据失败:', error);
@@ -178,9 +187,16 @@ export default {
       this.currentChart = chartUrls[tab];
     },
     navigateToTrade() {
-      uni.navigateTo({
-        url: `/pages/trade/trade?code=${this.code}`,
-      });
+       if (!store.hasLogin) {
+           
+          uni.navigateTo({
+            url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=smsCode'
+          });
+        } else {
+          uni.navigateTo({
+            url: `/src/pages/trade/trade?code=${this.code}`,
+          });
+        }
     },
     async handleFavoriteTap() {
         if(!store.hasLogin){
@@ -189,7 +205,7 @@ export default {
         		success:res=>{
         			if(res.confirm){
         				uni.navigateTo({
-        					url:"/"+pageJson.uniIdRouter.loginPage
+        					url:"/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=smsCode"
         				})
         			}
         		}
@@ -249,11 +265,7 @@ export default {
               }
             },
   },
-   mounted() {
-   this.loadStockData();
-         this.checkFavorite();
-      this.setFavoriteState();
-    }
+  
 };
 </script>
 
@@ -409,16 +421,16 @@ export default {
 }
 
 .share-button {
-  padding: 0; /* 去除按钮内边距 */
-  background-color: transparent; /* 透明背景 */
-  border: none; /* 去除按钮边框 */
+  padding: 0; 
+  background-color: transparent;
+  border: none;
 }
 .share-button .icon{
     margin-top: 5px;
 }
 .icon {
-  width: 25px; /* 图片宽度 */
-  height: 25px; /* 图片高度 */
+  width: 25px; 
+  height: 25px; 
 }
 
 .tab-bar {
@@ -426,19 +438,26 @@ export default {
   bottom: 0;
   display: flex;
   width: 100%;
-  height: 50px; /* 增加高度以容纳图标和文字 */
+  height: 50px; 
   background-color: #ffffff;
   border-top: 1px solid #e0e0e0;
 }
 
 .trade {
+ font-size: small;
+ font-weight: bolder;
   padding: 10px 20px;
   color: #fff;
   background-color: #d84a36;
   border: none;
   border-radius: 15px;
+  cursor: pointer;
 }
-
+.disabled {
+    width: 140px;
+  background-color: #ccc;
+  cursor: pointer;
+}
 /* 导航栏中的每一项 */
 .tab-item {
   display: flex;
