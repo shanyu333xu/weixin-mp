@@ -30,27 +30,37 @@
 
 <script lang="ts" setup>
 import { fetchStockData } from '@/service/stockService'
-import { StockData } from '@/types/stockService'
-
+import { BaseStockData, StockData } from '@/types/stockService'
+import BaseStocksList from '@/store/BaseStocksList.json'
 const searchText = ref<string>('')
 const stocks = ref<StockData[] | null>(null)
+const stockCodes = ref<string[]>([])
 const onSearchConfirm: UniHelper.InputOnConfirm = (event) => {
   searchText.value = event.detail.value
   console.log(`搜索内容： ${searchText.value}`)
-  const stockCodes = search(searchText)
-  getStocks(stockCodes)
+  if (!searchText.value) {
+    stockCodes.value = []
+    stocks.value = null
+    return
+  }
+  search(searchText.value)
+  getStocks(stockCodes.value.slice(0, 20))
 }
 const search = (searchText) => {
-  // 测试数据
-  const stockCodes = ['sh601006', 'sh601001']
-  console.log(stockCodes)
-  return stockCodes
+  // 将搜索文本转换为小写，以便进行不区分大小写的匹配
+  const query = searchText.toLowerCase()
+  // 过滤出与搜索文本匹配的股票数据
+  stockCodes.value = BaseStocksList.filter(
+    (stock: BaseStockData) =>
+      stock.name.toLowerCase().includes(query) ||
+      stock.code.toLowerCase().includes(query) ||
+      stock.industry?.toLowerCase().includes(query),
+  ).map((stock: BaseStockData) => stock.code)
 }
 const getStocks = async (stockCodes: string[]) => {
   const stockData = await fetchStockData(stockCodes)
   stocks.value = Object.values(stockData)
 }
-onShow(async () => {})
 </script>
 
 <style lang="scss" scoped>

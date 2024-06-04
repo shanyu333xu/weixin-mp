@@ -1,5 +1,10 @@
 // src/types/stockService.ts
 
+export interface BaseStockData {
+  code: string
+  name: string
+  industry: string | null
+}
 export interface OriStockData {
   name: string
   code: string
