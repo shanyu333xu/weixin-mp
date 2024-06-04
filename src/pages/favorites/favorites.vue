@@ -21,24 +21,26 @@
     </navigator>
   </view>
   <!-- 自选列表 -->
-  <ThsStockList :stocks="stocks" />
+  <ThsStockList :stockCodes="stockCodes" />
 </template>
 
 <script lang="ts" setup>
 import { StockData } from '@/types/stockService'
 import { fetchStockData } from '@/service/stockService'
 // 测试数据
-const stocks = ref<StockData[]>([])
-const getStocks = async () => {
-  const stockCodes = ['sh601006', 'sh601001']
-  const stockData = await fetchStockData(stockCodes)
-  stocks.value = Object.values(stockData)
-  console.log(stockData)
-}
-
-onShow(() => {
-  getStocks()
-})
+const stockCodes = ref<string[]>([
+  'sh601006',
+  'sh601001',
+  'sh601101',
+  'sh600881',
+  'sh688399',
+  'sh688981',
+  'sh600150',
+  'sh600733',
+  'sh601919',
+  'sh601899',
+  'sh601020',
+])
 </script>
 
 <style lang="scss" scoped>

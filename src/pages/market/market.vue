@@ -46,7 +46,7 @@
       </view>
     </view>
   </view>
-  <ThsStockList :stocks="stocks" :maxRows="10" :quickSort="true" />
+  <ThsStockList :stockCodes="stockCodes" :maxRows="10" :quickSort="true" />
 </template>
 
 <script lang="ts" setup>
@@ -57,26 +57,22 @@ import { StockData } from '@/types/stockService'
 const szIndex = ref<StockData | null>(null)
 const szcIndex = ref<StockData | null>(null)
 const cybIndex = ref<StockData | null>(null)
-const stocks = ref<StockData[] | null>([])
+const stockCodes = ref<string[] | null>([
+  'sh601006',
+  'sh601001',
+  'sh601101',
+  'sh600881',
+  'sh688399',
+  'sh688981',
+  'sh600150',
+  'sh600733',
+  'sh601919',
+  'sh601899',
+  'sh601020',
+])
 
 const getStocks = async () => {
   try {
-    const stockCodes = [
-      'sh601006',
-      'sh601001',
-      'sh601101',
-      'sh600881',
-      'sh688399',
-      'sh688981',
-      'sh600150',
-      'sh600733',
-      'sh601919',
-      'sh601899',
-      'sh601020',
-    ]
-    const stockData = await fetchStockData(stockCodes)
-    stocks.value = stockData
-
     const [szData, szcData, cybData] = await Promise.all([
       fetchStockData(['sh000001']),
       fetchStockData(['sz399001']),
