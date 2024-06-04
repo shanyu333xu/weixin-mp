@@ -9,14 +9,17 @@
 
 <template>
   <!-- 搜索框,其实是跳转到搜索页面 -->
-  <view>
-    <navigator url="/pages/search/search" open-type="navigate" hover-class="navigator-hover">
-      <image src="" mode="scaleToFill" />
+  <view class="searchbox">
+    <navigator
+      class="searchnavigator"
+      url="/pages/search/search"
+      open-type="navigate"
+      hover-class="navigator-hover"
+    >
+      <icon type="search" />
       <text>搜股票名称/股票代码</text>
     </navigator>
   </view>
-  <!-- 消息栏 -->
-  <view>消息栏</view>
   <!-- 自选列表 -->
   <ThsStockList :stocks="stocks" />
 </template>
@@ -39,5 +42,15 @@ onShow(() => {
 </script>
 
 <style lang="scss" scoped>
-//
+.searchbox {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  margin: 10px;
+  border: 1px solid #000000;
+  border-radius: 20px;
+}
+.searchnavigator {
+  padding: 0px 80px 0px 80px;
+}
 </style>
