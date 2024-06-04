@@ -1,3 +1,4 @@
+<!-- src\pages\favorites\favorites.vue -->
 <route lang="json5" type="page">
 {
   layout: 'default',
@@ -9,35 +10,55 @@
 
 <template>
   <!-- 搜索框,其实是跳转到搜索页面 -->
-  <view>
-    <navigator url="/pages/search/search" open-type="navigate" hover-class="navigator-hover">
-      <image src="" mode="scaleToFill" />
+  <view class="searchbox">
+    <navigator
+      class="searchnavigator"
+      url="/pages/search/search"
+      open-type="navigate"
+      hover-class="navigator-hover"
+    >
+      <icon type="search" />
       <text>搜股票名称/股票代码</text>
     </navigator>
   </view>
-  <!-- 消息栏 -->
-  <view>消息栏</view>
   <!-- 自选列表 -->
-  <ThsStockList :stocks="stocks" />
+  <ThsStockList ref="stockListRef" :stockCodes="stockCodes" />
 </template>
 
 <script lang="ts" setup>
-import { StockData } from '@/types/stockService'
-import { fetchStockData } from '@/service/stockService'
-// 测试数据
-const stocks = ref<StockData[]>([])
-const getStocks = async () => {
-  const stockCodes = ['sh601006', 'sh601001']
-  const stockData = await fetchStockData(stockCodes)
-  stocks.value = Object.values(stockData)
-  console.log(stockData)
-}
+import { useStockList } from '@/composables/exStockList'
 
-onShow(() => {
-  getStocks()
+// 测试数据
+const stockCodes = ref<string[]>([
+  'sh601006',
+  'sh601001',
+  'sh601101',
+  'sh600881',
+  'sh688399',
+  'sh688981',
+  'sh600150',
+  'sh600733',
+  'sh601919',
+  'sh601899',
+  'sh601020',
+])
+// 列表触底增量
+const { stockListRef, onScrolltolower } = useStockList()
+onReachBottom(async () => {
+  await stockListRef.value.getStockData()
 })
 </script>
 
 <style lang="scss" scoped>
-//
+.searchbox {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  margin: 10px;
+  border: 1px solid #000000;
+  border-radius: 20px;
+}
+.searchnavigator {
+  padding: 0px 80px 0px 80px;
+}
 </style>

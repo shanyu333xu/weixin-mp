@@ -8,6 +8,18 @@
 </route>
 
 <template>
+  <!-- 搜索框,其实是跳转到搜索页面 -->
+  <view class="searchbox">
+    <navigator
+      class="searchnavigator"
+      url="/pages/search/search"
+      open-type="navigate"
+      hover-class="navigator-hover"
+    >
+      <icon type="search" />
+      <text>搜股票名称/股票代码</text>
+    </navigator>
+  </view>
   <view class="container">
     <view class="market-status">
       <image :src="marketStatusIcon" class="status-icon"></image>
@@ -17,60 +29,57 @@
       <text class="time-text">{{ marketTime }}</text>
     </view>
     <view class="indices">
-      <view v-if="szIndex" :class="['index-box', parseFloat(szIndex.change) >= 0 ? 'up' : 'down']">
+      <view v-if="szIndex" :class="['index-box', szIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">上证综指</text>
         <text class="index-price">{{ szIndex.currentPrice }}</text>
         <text class="index-change">{{ szIndex.change }} ({{ szIndex.changePercent }}%)</text>
       </view>
-      <view
-        v-if="szcIndex"
-        :class="['index-box', parseFloat(szcIndex.change) >= 0 ? 'up' : 'down']"
-      >
+      <view v-if="szcIndex" :class="['index-box', szcIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">深证成指</text>
         <text class="index-price">{{ szcIndex.currentPrice }}</text>
         <text class="index-change">{{ szcIndex.change }} ({{ szcIndex.changePercent }}%)</text>
       </view>
-      <view
-        v-if="cybIndex"
-        :class="['index-box', parseFloat(cybIndex.change) >= 0 ? 'up' : 'down']"
-      >
+      <view v-if="cybIndex" :class="['index-box', cybIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">创业板指</text>
         <text class="index-price">{{ cybIndex.currentPrice }}</text>
         <text class="index-change">{{ cybIndex.change }} ({{ cybIndex.changePercent }}%)</text>
       </view>
     </view>
   </view>
-  <ThsStockList :stocks="stocks" :maxRows="10" :quickSort="true" />
+  <ThsStockList ref="stockListRef" :stockCodes="stockCodes" :quickSort="true" />
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { fetchStockData } from '@/service/stockService'
 import { StockData } from '@/types/stockService'
+import { useStockList } from '@/composables/exStockList'
 
 const szIndex = ref<StockData | null>(null)
 const szcIndex = ref<StockData | null>(null)
 const cybIndex = ref<StockData | null>(null)
-const stocks = ref<StockData[] | null>([])
+const stockCodes = ref<string[] | null>([
+  'sh601006',
+  'sh601001',
+  'sh601101',
+  'sh600881',
+  'sh688399',
+  'sh688981',
+  'sh600150',
+  'sh600733',
+  'sh601919',
+  'sh601899',
+  'sh601020',
+])
+
+// 列表触底增量
+const { stockListRef, onScrolltolower } = useStockList()
+onReachBottom(async () => {
+  await stockListRef.value.getStockData()
+})
 
 const getStocks = async () => {
   try {
-    const stockCodes = [
-      'sh601006',
-      'sh601001',
-      'sh601101',
-      'sh600881',
-      'sh688399',
-      'sh688981',
-      'sh600150',
-      'sh600733',
-      'sh601919',
-      'sh601899',
-      'sh601020',
-    ]
-    const stockData = await fetchStockData(stockCodes)
-    stocks.value = stockData
-
     const [szData, szcData, cybData] = await Promise.all([
       fetchStockData(['sh000001']),
       fetchStockData(['sz399001']),
@@ -198,5 +207,17 @@ onMounted(async () => {
 
 .index-change {
   font-size: 12px;
+}
+
+.searchbox {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  margin: 10px;
+  border: 1px solid #000000;
+  border-radius: 20px;
+}
+.searchnavigator {
+  padding: 0px 80px 0px 80px;
 }
 </style>

@@ -167,6 +167,8 @@ const currentChart = ref<string>(`http://image.sinajs.cn/newchart/min/n/sh${prop
 onShow(async () => {
   const stockData = await fetchStockData([props.code])
   stock.value = stockData[0]
+  // 动态设置标题
+  uni.setNavigationBarTitle({ title: stock.value.name + stock.value.code })
   currentChart.value = `http://image.sinajs.cn/newchart/min/n/sh${props.code}.gif`
 })
 

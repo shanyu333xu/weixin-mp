@@ -1,3 +1,4 @@
+<!-- src\components\ThsStockList.vue -->
 <template>
   <!-- 快捷排序 -->
   <view v-if="quickSort">
@@ -97,18 +98,21 @@
       </view>
     </navigator>
   </view>
+  <view v-if="!maxRows" class="loading-text">{{ finish ? '没有更多数据...' : '正在加载...' }}</view>
 </template>
 
 <script lang="ts" setup>
+import { fetchStockData } from '@/service/stockService'
 import { StockData } from '@/types/stockService'
 import { defineProps, computed, ref } from 'vue'
 
 const props = defineProps<{
-  stocks: StockData[]
+  stockCodes: string[]
   maxRows?: number
   quickSort?: boolean
 }>()
-
+const loaded = ref(0)
+const stocks = ref<StockData[]>([])
 const sortOrder = ref<'none' | 'asc' | 'desc'>('none')
 const sortKey = ref<string>('')
 const sortOptions = ref([
@@ -123,9 +127,9 @@ const sortOptions = ref([
 // 计算属性，限制显示的行数
 const limitedStocks = computed(() => {
   if (props.maxRows !== undefined) {
-    return props.stocks.slice(0, props.maxRows)
+    return stocks.value.slice(0, props.maxRows)
   }
-  return props.stocks
+  return stocks.value
 })
 
 // 排序逻辑
@@ -160,6 +164,48 @@ function sortBy(key: string, order: 'asc' | 'desc') {
   sortKey.value = key
   sortOrder.value = order
 }
+
+// 加载完毕标记
+const finish = ref(false)
+// 获取股票数据
+const getStockData = async () => {
+  // 退出判断
+  if (finish.value === true) {
+    return uni.showToast({ icon: 'none', title: '没有更多数据...' })
+  }
+  const right = Math.min(props.stockCodes.length, loaded.value + 10)
+  console.log('获取数据' + loaded.value + '--' + right)
+  const res = await fetchStockData(props.stockCodes.slice(loaded.value, right))
+  loaded.value = right
+  stocks.value.push(...res)
+  if (props.stockCodes.length === loaded.value) {
+    finish.value = true
+  }
+}
+// 重置数据
+const resetData = () => {
+  stocks.value = []
+  finish.value = false
+  loaded.value = 0
+}
+// 组价挂载完毕
+onMounted(() => {
+  getStockData()
+})
+// 监听 stockCodes 变化
+watch(
+  () => props.stockCodes,
+  () => {
+    resetData()
+    getStockData()
+  },
+  { immediate: true },
+)
+// 暴露方法
+defineExpose({
+  resetData,
+  getStockData,
+})
 </script>
 
 <style lang="scss" scoped>
@@ -261,5 +307,12 @@ button {
 .title {
   font-size: large;
   font-weight: bold;
+}
+// 加载提示文字
+.loading-text {
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
 }
 </style>
