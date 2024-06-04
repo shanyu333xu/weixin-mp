@@ -1,3 +1,4 @@
+<!-- src\pages\favorites\favorites.vue -->
 <route lang="json5" type="page">
 {
   layout: 'default',
@@ -21,12 +22,12 @@
     </navigator>
   </view>
   <!-- 自选列表 -->
-  <ThsStockList :stockCodes="stockCodes" />
+  <ThsStockList ref="stockListRef" :stockCodes="stockCodes" />
 </template>
 
 <script lang="ts" setup>
-import { StockData } from '@/types/stockService'
-import { fetchStockData } from '@/service/stockService'
+import { useStockList } from '@/composables/exStockList'
+
 // 测试数据
 const stockCodes = ref<string[]>([
   'sh601006',
@@ -41,6 +42,11 @@ const stockCodes = ref<string[]>([
   'sh601899',
   'sh601020',
 ])
+// 列表触底增量
+const { stockListRef, onScrolltolower } = useStockList()
+onReachBottom(async () => {
+  await stockListRef.value.getStockData()
+})
 </script>
 
 <style lang="scss" scoped>

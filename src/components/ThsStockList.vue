@@ -1,3 +1,4 @@
+<!-- src\components\ThsStockList.vue -->
 <template>
   <!-- 快捷排序 -->
   <view v-if="quickSort">
@@ -168,15 +169,16 @@ function sortBy(key: string, order: 'asc' | 'desc') {
 const finish = ref(false)
 // 获取股票数据
 const getStockData = async () => {
-  console.log('获取数据' + loaded.value)
   // 退出判断
   if (finish.value === true) {
     return uni.showToast({ icon: 'none', title: '没有更多数据...' })
   }
   const right = Math.min(props.stockCodes.length, loaded.value + 10)
+  console.log('获取数据' + loaded.value + '--' + right)
   const res = await fetchStockData(props.stockCodes.slice(loaded.value, right))
+  loaded.value = right
   stocks.value.push(...res)
-  if (props.stockCodes.length === loaded.value + 10) {
+  if (props.stockCodes.length === loaded.value) {
     finish.value = true
   }
 }
@@ -184,15 +186,25 @@ const getStockData = async () => {
 const resetData = () => {
   stocks.value = []
   finish.value = false
+  loaded.value = 0
 }
 // 组价挂载完毕
 onMounted(() => {
   getStockData()
 })
+// 监听 stockCodes 变化
+watch(
+  () => props.stockCodes,
+  () => {
+    resetData()
+    getStockData()
+  },
+  { immediate: true },
+)
 // 暴露方法
 defineExpose({
   resetData,
-  getMore: getStockData,
+  getStockData,
 })
 </script>
 

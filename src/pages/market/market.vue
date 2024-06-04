@@ -46,13 +46,14 @@
       </view>
     </view>
   </view>
-  <ThsStockList :stockCodes="stockCodes" :maxRows="10" :quickSort="true" />
+  <ThsStockList ref="stockListRef" :stockCodes="stockCodes" :quickSort="true" />
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { fetchStockData } from '@/service/stockService'
 import { StockData } from '@/types/stockService'
+import { useStockList } from '@/composables/exStockList'
 
 const szIndex = ref<StockData | null>(null)
 const szcIndex = ref<StockData | null>(null)
@@ -70,6 +71,12 @@ const stockCodes = ref<string[] | null>([
   'sh601899',
   'sh601020',
 ])
+
+// 列表触底增量
+const { stockListRef, onScrolltolower } = useStockList()
+onReachBottom(async () => {
+  await stockListRef.value.getStockData()
+})
 
 const getStocks = async () => {
   try {
