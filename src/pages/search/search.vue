@@ -10,14 +10,39 @@
       @confirm="onSearchConfirm"
     />
   </view>
+  <!-- 搜索历史 -->
+  <view></view>
+  <!-- 搜索结果 -->
+  <ThsStockList v-if="stocks" :stocks="stocks" />
+  <!-- 大家都在搜 -->
+  <view v-else>
+    <view></view>
+  </view>
 </template>
 
 <script lang="ts" setup>
-const searchText = ref('')
+import { fetchStockData } from '../../service/stockService'
+import { StockData } from '../../types/stockService'
+
+const searchText = ref<string>('')
+const stocks = ref<StockData[] | null>(null)
 const onSearchConfirm: UniHelper.InputOnConfirm = (event) => {
   searchText.value = event.detail.value
   console.log(`搜索内容： ${searchText.value}`)
+  const stockCodes = search(searchText)
+  getStocks(stockCodes)
 }
+const search = (searchText) => {
+  // 测试数据
+  const stockCodes = ['sh601006', 'sh601001']
+  console.log(stockCodes)
+  return stockCodes
+}
+const getStocks = async (stockCodes: string[]) => {
+  const stockData = await fetchStockData(stockCodes)
+  stocks.value = Object.values(stockData)
+}
+onShow(async () => {})
 </script>
 
 <style lang="scss" scoped>
