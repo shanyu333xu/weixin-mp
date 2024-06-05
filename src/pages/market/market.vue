@@ -32,7 +32,7 @@
       </view>
     </view>
   </view>
-  <ThsStockList :stocks="stocks" :maxRows="10" />
+ <ThsStockList :stocks="stocks" :maxRows="10" :quickSort="true" />
 </template>
 
 <script lang="ts" setup>

@@ -297,6 +297,7 @@ export default {
 }
 
 .top-left-down {
+    width: 110px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -444,6 +445,7 @@ export default {
 }
 
 .trade {
+ width: 140px;
  font-size: small;
  font-weight: bolder;
   padding: 10px 20px;
