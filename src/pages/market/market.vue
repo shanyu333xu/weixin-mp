@@ -65,31 +65,37 @@ const stockCodes = ref<string[] | null>([
   'sh601020',
 ])
 
-// 列表触底增量
-
-let observer: IntersectionObserver
-
-function setupIntersectionObserver() {
-  const sentinel = document.querySelector('.sentinel')
-  if (!sentinel) return
-
-  observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      getStockData()
-    }
-  }, {
-    root: null,
-    rootMargin: '0px',
-    threshold: 1.0
-  })
-
-  observer.observe(sentinel)
+const search = (searchText) => {
+  serched.value = true
+  // 将搜索文本转换为小写，以便进行不区分大小写的匹配
+  const query = searchText.toLowerCase()
+  // 过滤出与搜索文本匹配的股票数据
+  stockCodes.value = BaseStocksList.filter(
+    (stock: BaseStockData) =>
+      stock.name.toLowerCase().includes(query) ||
+      stock.code.toLowerCase().includes(query) ||
+      stock.industry?.toLowerCase().includes(query),
+  ).map((stock: BaseStockData) => stock.code)
 }
-// import {onReachBottom} from 'vue'
-// const { stockListRef, onScrolltolower } = useStockList()
-// onReachBottom(async () => {
-//   await stockListRef.value.getStockData()
-// })
+import type { ThsStockListInstance } from '../types/components'
+const useStockList = () => {
+  // 组件实例
+  const stockListRef = ref<ThsStockListInstance | null>(null);
+
+  // 滚动触底事件
+  const onScrolltolower = () => {
+    console.log('Scroll to lower');
+    stockListRef.value?.getStockData();
+  };
+
+  return { stockListRef, onScrolltolower };
+};
+// 列表触底增量
+import { onReachBottom } from '@dcloudio/uni-app';
+const { stockListRef, onScrolltolower } = useStockList()
+onReachBottom(async () => {
+  await stockListRef.value.getStockData()
+})
 
 const getStocks = async () => {
   try {
@@ -139,16 +145,13 @@ const updateMarketStatus = () => {
 
 onMounted(async () => {
   await getStocks()
-  setupIntersectionObserver()
   updateMarketStatus()
   setInterval(() => {
     updateMarketStatus()
   }, 60000) // 每分钟更新一次状态
 })
 
-onUnmounted(() => {
-  observer.disconnect()
-})
+
 </script>
 
 <style>

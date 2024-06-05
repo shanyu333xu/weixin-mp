@@ -55,12 +55,25 @@ const search = (searchText) => {
       stock.industry?.toLowerCase().includes(query),
   ).map((stock: BaseStockData) => stock.code)
 }
+import type { ThsStockListInstance } from '../types/components'
+const useStockList = () => {
+  // 组件实例
+  const stockListRef = ref<ThsStockListInstance | null>(null);
 
+  // 滚动触底事件
+  const onScrolltolower = () => {
+    console.log('Scroll to lower');
+    stockListRef.value?.getStockData();
+  };
+
+  return { stockListRef, onScrolltolower };
+};
 // 列表触底增量
-// const { stockListRef, onScrolltolower } = useStockList()
-// onReachBottom(async () => {
-//   await stockListRef.value.getStockData()
-// })
+import { onReachBottom } from '@dcloudio/uni-app';
+const { stockListRef, onScrolltolower } = useStockList()
+onReachBottom(async () => {
+  await stockListRef.value.getStockData()
+})
 </script>
 
 <style lang="scss" scoped>

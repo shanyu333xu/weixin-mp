@@ -160,9 +160,10 @@ export default {
     };
   },
  mounted() {
+     this.checkFavorite();
  this.loadStockData();
-       this.checkFavorite();
-    this.setFavoriteState();
+
+this.setFavoriteState();
   },
 
   methods: {
@@ -198,7 +199,7 @@ export default {
           });
         }
     },
-    async handleFavoriteTap(code) {
+    async handleFavoriteTap() {
         if(!store.hasLogin){
         	uni.showModal({
         		title:"登录后才可进行后续操作",
@@ -243,6 +244,7 @@ export default {
                   icon: "success"
               });
 	}
+
     },
     setFavoriteState() {
           if (this.isFavorite) {

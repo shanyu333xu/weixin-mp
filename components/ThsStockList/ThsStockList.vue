@@ -57,7 +57,7 @@
       class="stock_item"
       v-for="(item, index) in sortedStocks"
       :key="index"
-      :url="`/pages/stock-detail/stock-detail?code=${item.code}`"
+      :url="`/src/pages/stock-detail/stock-detail?code=${item.code}`"
       open-type="navigate"
       hover-class="navigator-hover"
       role="row"

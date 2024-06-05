@@ -11,7 +11,6 @@
           <text>搜股票名称/股票代码</text>
         </navigator>
   </view>
-
   <ThsStockList :stocks="stocks" />
 </template>
 
