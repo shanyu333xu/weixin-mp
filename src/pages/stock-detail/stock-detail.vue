@@ -198,7 +198,7 @@ export default {
           });
         }
     },
-    async handleFavoriteTap() {
+    async handleFavoriteTap(code) {
         if(!store.hasLogin){
         	uni.showModal({
         		title:"登录后才可进行后续操作",

@@ -1,18 +1,18 @@
 <template>
-     
+    <NavigationBar/>
+  <!-- 搜索框,其实是跳转到搜索页面 -->
+  <view class="searchbox">
+    <navigator
+      class="searchnavigator"
+      url="/src/pages/search/search"
+      open-type="navigate"
+      hover-class="navigator-hover"
+    >
+      <icon type="search" />
+      <text>搜股票名称/股票代码</text>
+    </navigator>
+  </view>
   <view class="container">
-        <NavigationBar title="行情"></NavigationBar>
-        <view class="searchbox">
-           <navigator
-             class="searchnavigator"
-             url="/src/pages/search/search"
-             open-type="navigate"
-             hover-class="navigator-hover"
-           >
-             <icon type="search" />
-             <text>搜股票名称/股票代码</text>
-           </navigator>
-         </view>
     <view class="market-status">
       <image :src="marketStatusIcon" class="status-icon"></image>
       <text class="status-text">{{ marketStatus }}</text>
@@ -21,58 +21,78 @@
       <text class="time-text">{{ marketTime }}</text>
     </view>
     <view class="indices">
-      
-         <view v-if="szIndex" :class="['index-box', szIndex.change >= 0 ? 'up' : 'down']">
+      <view v-if="szIndex" :class="['index-box', szIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">上证综指</text>
         <text class="index-price">{{ szIndex.currentPrice }}</text>
         <text class="index-change">{{ szIndex.change }} ({{ szIndex.changePercent }}%)</text>
       </view>
-       <view v-if="szcIndex" :class="['index-box', szcIndex.change >= 0 ? 'up' : 'down']">
+      <view v-if="szcIndex" :class="['index-box', szcIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">深证成指</text>
         <text class="index-price">{{ szcIndex.currentPrice }}</text>
         <text class="index-change">{{ szcIndex.change }} ({{ szcIndex.changePercent }}%)</text>
       </view>
-    <view v-if="cybIndex" :class="['index-box', cybIndex.change >= 0 ? 'up' : 'down']">
+      <view v-if="cybIndex" :class="['index-box', cybIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">创业板指</text>
         <text class="index-price">{{ cybIndex.currentPrice }}</text>
         <text class="index-change">{{ cybIndex.change }} ({{ cybIndex.changePercent }}%)</text>
       </view>
     </view>
   </view>
- <ThsStockList :stocks="stocks" :maxRows="10" :quickSort="true" />
+  <ThsStockList ref="stockListRef" :stockCodes="stockCodes" :quickSort="true" />
+  <view ref="sentinel" class="sentinel"></view>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
-
-
+import { ref, onMounted,onUnmounted } from 'vue'
 import { fetchStockData } from '../../service/stockService'
 import { StockData } from '../../types/stockService'
-
+import { useStockList } from '../../composables/exStockList'
 
 const szIndex = ref<StockData | null>(null)
 const szcIndex = ref<StockData | null>(null)
 const cybIndex = ref<StockData | null>(null)
-const stocks = ref<StockData[] | null>([])
+const stockCodes = ref<string[] | null>([
+  'sh601006',
+  'sh601001',
+  'sh601101',
+  'sh600881',
+  'sh688399',
+  'sh688981',
+  'sh600150',
+  'sh600733',
+  'sh601919',
+  'sh601899',
+  'sh601020',
+])
+
+// 列表触底增量
+
+let observer: IntersectionObserver
+
+function setupIntersectionObserver() {
+  const sentinel = document.querySelector('.sentinel')
+  if (!sentinel) return
+
+  observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      getStockData()
+    }
+  }, {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1.0
+  })
+
+  observer.observe(sentinel)
+}
+// import {onReachBottom} from 'vue'
+// const { stockListRef, onScrolltolower } = useStockList()
+// onReachBottom(async () => {
+//   await stockListRef.value.getStockData()
+// })
 
 const getStocks = async () => {
   try {
-    const stockCodes = [
-      'sh601006',
-      'sh601001',
-      'sh601101',
-      'sh600881',
-      'sh688399',
-      'sh688981',
-      'sh600150',
-      'sh600733',
-      'sh601919',
-      'sh601899',
-      'sh601020',
-    ]
-    const stockData = await fetchStockData(stockCodes)
-    stocks.value = stockData
-
     const [szData, szcData, cybData] = await Promise.all([
       fetchStockData(['sh000001']),
       fetchStockData(['sz399001']),
@@ -119,51 +139,19 @@ const updateMarketStatus = () => {
 
 onMounted(async () => {
   await getStocks()
+  setupIntersectionObserver()
   updateMarketStatus()
   setInterval(() => {
     updateMarketStatus()
   }, 60000) // 每分钟更新一次状态
 })
+
+onUnmounted(() => {
+  observer.disconnect()
+})
 </script>
 
 <style>
-    .searchbox {
-      display: flex;
-      justify-content: center;
-      padding: 5px;
-      margin: 10px;
-      border: 1px solid #000000;
-      border-radius: 20px;
-    }
-    .searchnavigator {
-      padding: 0px 50px 0px 50px;
-    }
-   .navigation-bar {
-     display: flex;
-     align-items: center;
-     justify-content: center; /* 使内容在水平方向上居中 */
-     padding: 10px;
-     background-color: #fff;
-     position: relative;
-   }
-   .nav-bar-logo {
-     width: 30px;
-     height: 30px;
-     position: absolute;
-     left: 10px; /* 调整图片的位置 */
-   }
-   .nav-bar-title {
-     font-size: 13px;
-     color: #333;
-     text-align: center;
-     flex: 1; /* 占据剩余空间以便居中 */
-   }
-   .nav-bar-placeholder {
-     width: 30px; /* 确保与 nav-bar-logo 宽度相同 */
-     height: 30px;
-     position: absolute;
-     right: 10px; /* 用于占位 */
-   }
 .container {
   padding: 10px;
 }
@@ -237,5 +225,17 @@ onMounted(async () => {
 
 .index-change {
   font-size: 12px;
+}
+
+.searchbox {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  margin: 10px;
+  border: 1px solid #000000;
+  border-radius: 20px;
+}
+.searchnavigator {
+  padding: 0px 80px 0px 80px;
 }
 </style>

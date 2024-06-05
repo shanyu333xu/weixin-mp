@@ -1,6 +1,6 @@
 <template>
+    <BackButton></BackButton>
   <!-- 搜索输入框 -->
-  <BackButton/>
   <view class="search-container">
     <input
       class="search-input"
@@ -13,7 +13,7 @@
   <!-- 搜索历史 -->
   <view></view>
   <!-- 搜索结果 -->
-  <ThsStockList v-if="stocks" :stocks="stocks" />
+  <ThsStockList v-if="serched" ref="stockListRef" :stockCodes="stockCodes" />
   <!-- 大家都在搜 -->
   <view v-else>
     <view></view>
@@ -21,28 +21,46 @@
 </template>
 
 <script lang="ts" setup>
-import { fetchStockData } from '../../service/stockService'
-import { StockData } from '../../types/stockService'
+import { ref, watch, nextTick } from 'vue'
+import ThsStockList from '/components/ThsStockList/ThsStockList'
+import { BaseStockData } from '../../types/stockService'
+import BaseStocksList from '/src/store/BaseStocksList.json'
+import { useStockList } from '/src/composables/exStockList'
 
 const searchText = ref<string>('')
-const stocks = ref<StockData[] | null>(null)
+const stockCodes = ref<string[]>([])
+const serched = ref(false)
+
 const onSearchConfirm: UniHelper.InputOnConfirm = (event) => {
   searchText.value = event.detail.value
   console.log(`搜索内容： ${searchText.value}`)
-  const stockCodes = search(searchText)
-  getStocks(stockCodes)
+  if (!searchText.value) {
+    stockCodes.value = []
+    serched.value = false
+    return
+  }
+  search(searchText.value)
+  console.log(`搜索结果： ${stockCodes.value}`)
 }
+
 const search = (searchText) => {
-  // 测试数据
-  const stockCodes = ['sh601006', 'sh601001']
-  console.log(stockCodes)
-  return stockCodes
+  serched.value = true
+  // 将搜索文本转换为小写，以便进行不区分大小写的匹配
+  const query = searchText.toLowerCase()
+  // 过滤出与搜索文本匹配的股票数据
+  stockCodes.value = BaseStocksList.filter(
+    (stock: BaseStockData) =>
+      stock.name.toLowerCase().includes(query) ||
+      stock.code.toLowerCase().includes(query) ||
+      stock.industry?.toLowerCase().includes(query),
+  ).map((stock: BaseStockData) => stock.code)
 }
-const getStocks = async (stockCodes: string[]) => {
-  const stockData = await fetchStockData(stockCodes)
-  stocks.value = Object.values(stockData)
-}
-onShow(async () => {})
+
+// 列表触底增量
+// const { stockListRef, onScrolltolower } = useStockList()
+// onReachBottom(async () => {
+//   await stockListRef.value.getStockData()
+// })
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +75,7 @@ onShow(async () => {})
 
 .search-input {
   width: 100%;
-  padding: 0px 30px 0px 30px;
+  padding: 0px 80px 0px 80px;
   font-size: 16px;
   border: none;
   border-radius: 20px;

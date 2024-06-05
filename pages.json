@@ -178,5 +178,6 @@
         "^vue-file-(.*)": "packageName/path/to/vue-file-$1.vue" 
       }
       },    
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+    "onReachBottomDistance": 50
 }
