@@ -160,9 +160,8 @@ export default {
     };
   },
  mounted() {
-     this.checkFavorite();
+this.checkFavorite();
  this.loadStockData();
-
 this.setFavoriteState();
   },
 

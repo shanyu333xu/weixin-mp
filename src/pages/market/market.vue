@@ -39,7 +39,7 @@
     </view>
   </view>
   <ThsStockList ref="stockListRef" :stockCodes="stockCodes" :quickSort="true" />
-  <view ref="sentinel" class="sentinel"></view>
+  
 </template>
 
 <script lang="ts" setup>

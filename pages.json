@@ -171,6 +171,7 @@
 		"backgroundColor": "#F8F8F8",
          "navigationStyle": "custom"
 	},
+       "onShareAppMessage": "customShareMethod",
     "easycom": {
       "autoscan": true,
       "custom": {
