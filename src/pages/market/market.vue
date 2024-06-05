@@ -1,6 +1,18 @@
 <template>
+     
   <view class="container">
         <NavigationBar title="行情"></NavigationBar>
+        <view class="searchbox">
+           <navigator
+             class="searchnavigator"
+             url="/src/pages/search/search"
+             open-type="navigate"
+             hover-class="navigator-hover"
+           >
+             <icon type="search" />
+             <text>搜股票名称/股票代码</text>
+           </navigator>
+         </view>
     <view class="market-status">
       <image :src="marketStatusIcon" class="status-icon"></image>
       <text class="status-text">{{ marketStatus }}</text>
@@ -9,23 +21,18 @@
       <text class="time-text">{{ marketTime }}</text>
     </view>
     <view class="indices">
-      <view v-if="szIndex" :class="['index-box', parseFloat(szIndex.change) >= 0 ? 'up' : 'down']">
+      
+         <view v-if="szIndex" :class="['index-box', szIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">上证综指</text>
         <text class="index-price">{{ szIndex.currentPrice }}</text>
         <text class="index-change">{{ szIndex.change }} ({{ szIndex.changePercent }}%)</text>
       </view>
-      <view
-        v-if="szcIndex"
-        :class="['index-box', parseFloat(szcIndex.change) >= 0 ? 'up' : 'down']"
-      >
+       <view v-if="szcIndex" :class="['index-box', szcIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">深证成指</text>
         <text class="index-price">{{ szcIndex.currentPrice }}</text>
         <text class="index-change">{{ szcIndex.change }} ({{ szcIndex.changePercent }}%)</text>
       </view>
-      <view
-        v-if="cybIndex"
-        :class="['index-box', parseFloat(cybIndex.change) >= 0 ? 'up' : 'down']"
-      >
+    <view v-if="cybIndex" :class="['index-box', cybIndex.change >= 0 ? 'up' : 'down']">
         <text class="index-name">创业板指</text>
         <text class="index-price">{{ cybIndex.currentPrice }}</text>
         <text class="index-change">{{ cybIndex.change }} ({{ cybIndex.changePercent }}%)</text>
@@ -120,6 +127,17 @@ onMounted(async () => {
 </script>
 
 <style>
+    .searchbox {
+      display: flex;
+      justify-content: center;
+      padding: 5px;
+      margin: 10px;
+      border: 1px solid #000000;
+      border-radius: 20px;
+    }
+    .searchnavigator {
+      padding: 0px 50px 0px 50px;
+    }
    .navigation-bar {
      display: flex;
      align-items: center;

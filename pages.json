@@ -35,6 +35,13 @@
             "navigationBarTitleText": "交易"
         }
     },
+    {
+        "path": "src/pages/search/search",
+        "style": {
+            "enablePullDownRefresh": false,
+            "navigationBarTitleText": "搜索"
+        }
+    },
 {
     "path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
     "style": {

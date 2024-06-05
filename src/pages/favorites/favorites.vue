@@ -1,10 +1,15 @@
 <template>
   <view class="navigation-bar"></view>
-  <view>
-    <text>搜索栏</text>
-    <navigator url="/pages/search/search" open-type="navigate" hover-class="navigator-hover">
-      <text>搜股票名称/股票代码</text>
-    </navigator>
+      <view class="searchbox">
+        <navigator
+          class="searchnavigator"
+          url="/src/pages/search/search"
+          open-type="navigate"
+          hover-class="navigator-hover"
+        >
+          <icon type="search" />
+          <text>搜股票名称/股票代码</text>
+        </navigator>
   </view>
 
   <ThsStockList :stocks="stocks" />
@@ -35,6 +40,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .searchbox {
+      display: flex;
+      justify-content: center;
+      padding: 5px;
+      margin: 10px;
+      border: 1px solid #000000;
+      border-radius: 20px;
+    }
+    .searchnavigator {
+      padding: 0px 80px 0px 80px;
+    }
 .navigation-bar {
   display: flex;
   align-items: center;
