@@ -35,6 +35,13 @@
             "navigationBarTitleText": "交易"
         }
     },
+    {
+        "path": "src/pages/search/search",
+        "style": {
+            "enablePullDownRefresh": false,
+            "navigationBarTitleText": "搜索"
+        }
+    },
 {
     "path": "uni_modules/uni-id-pages/pages/userinfo/userinfo",
     "style": {
@@ -164,6 +171,7 @@
 		"backgroundColor": "#F8F8F8",
          "navigationStyle": "custom"
 	},
+       "onShareAppMessage": "customShareMethod",
     "easycom": {
       "autoscan": true,
       "custom": {
@@ -171,5 +179,6 @@
         "^vue-file-(.*)": "packageName/path/to/vue-file-$1.vue" 
       }
       },    
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+    "onReachBottomDistance": 50
 }
