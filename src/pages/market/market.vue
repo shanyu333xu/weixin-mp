@@ -54,6 +54,8 @@
 				>
 			</view>
 		</view>
+		<!-- 涨跌条 -->
+		<RiseFallSection />
 		<!-- 同花顺头条 -->
 		<NewsPanel />
 		<!-- 今日板块 -->
@@ -171,6 +173,7 @@ const szcIndex = ref<StockData | null>(null);
 const cybIndex = ref<StockData | null>(null);
 const stockCodes = ref<string[]>([]);
 
+import RiseFallSection from './RiseFallSection.vue';
 import type { ThsStockListInstance } from "../types/components";
 const useStockList = () => {
 	// 组件实例
@@ -462,4 +465,8 @@ onMounted(async () => {
 .negative {
 	color: green;
 }
+
+.rise-fall-section {
+    margin-top: 15px; /* 为涨跌条组件创建顶部间距 */
+  }
 </style>
