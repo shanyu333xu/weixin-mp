@@ -1,3 +1,4 @@
+// src\pages\market\service\marketBase.ts
 import { ref } from "vue";
 import { Result } from "@/pages/market/types/marketBase";
 

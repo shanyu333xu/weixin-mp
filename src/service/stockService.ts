@@ -19,8 +19,8 @@ export const fetchStockData = (stockCodes: string[]): Promise<StockData[]> => {
 					const stockCode = meta.split("_").pop();
 					if (!stockCode) return;
 					if (!values) return;
-
 					const elements = values.replace(/(^"|"$)/g, "").split(",");
+					if (!elements[0]) return;
 					const stockData: OriStockData = {
 						name: elements[0],
 						code: stockCode,

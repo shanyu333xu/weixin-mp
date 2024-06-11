@@ -80,7 +80,7 @@
 		<!-- 内容 -->
 		<navigator
 			class="stock_item"
-			v-for="(item, index) in sortedStocks"
+			v-for="(item, index) in limitedStocks"
 			:key="index"
 			:url="`/src/pages/stock-detail/stock-detail?code=${item.code}`"
 			open-type="navigate"
@@ -154,27 +154,28 @@ const sortOptions = ref([
 // 计算属性，限制显示的行数
 const limitedStocks = computed(() => {
 	if (props.maxRows !== undefined) {
-		return stocks.value.slice(0, props.maxRows);
+		return sortedStocks.value.slice(0, props.maxRows);
 	}
-	return stocks.value;
+	return sortedStocks.value;
 });
 
 // 排序逻辑
 const sortedStocks = computed(() => {
 	if (sortOrder.value === "asc") {
-		return [...limitedStocks.value].sort(
+		return [...stocks.value].sort(
 			(a, b) => a[sortKey.value] - b[sortKey.value]
 		);
 	} else if (sortOrder.value === "desc") {
-		return [...limitedStocks.value].sort(
+		return [...stocks.value].sort(
 			(a, b) => b[sortKey.value] - a[sortKey.value]
 		);
 	}
-	return limitedStocks.value;
+	return stocks.value;
 });
 
 // 切换排序状态
 function toggleSortOrder(key: string) {
+	activeIndex.value = null;
 	if (sortKey.value === key) {
 		if (sortOrder.value === "asc") {
 			sortOrder.value = "desc";
@@ -205,7 +206,10 @@ const finish = ref(false);
 const getStockData = async () => {
 	// 退出判断
 	if (finish.value === true) {
-		return uni.showToast({ icon: "none", title: "没有更多数据..." });
+		if (!props.maxRows) {
+			uni.showToast({ icon: "none", title: "没有更多数据..." });
+		}
+		return;
 	}
 	const right = Math.min(props.stockCodes.length, loaded.value + 10);
 	console.log("获取数据" + loaded.value + "--" + right);
@@ -229,9 +233,14 @@ onMounted(() => {
 // 监听 stockCodes 变化
 watch(
 	() => props.stockCodes,
-	() => {
+	async () => {
 		resetData();
-		getStockData();
+		await getStockData();
+		if (props.maxRows) {
+			while (!finish.value) {
+				await getStockData();
+			}
+		}
 	},
 	{ immediate: true }
 );

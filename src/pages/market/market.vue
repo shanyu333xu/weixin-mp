@@ -151,6 +151,7 @@
 			ref="stockListRef"
 			:stockCodes="stockCodes"
 			:quickSort="true"
+			:maxRows="10"
 		/>
 	</view>
 </template>
@@ -165,19 +166,7 @@ import { getMarketAPI, data } from "./service/marketBase";
 const szIndex = ref<StockData | null>(null);
 const szcIndex = ref<StockData | null>(null);
 const cybIndex = ref<StockData | null>(null);
-const stockCodes = ref<string[] | null>([
-	"sh601006",
-	"sh601001",
-	"sh601101",
-	"sh600881",
-	"sh688399",
-	"sh688981",
-	"sh600150",
-	"sh600733",
-	"sh601919",
-	"sh601899",
-	"sh601020",
-]);
+const stockCodes = ref<string[]>([]);
 
 const search = (searchText) => {
 	serched.value = true;
@@ -265,11 +254,40 @@ const updateMarketStatus = () => {
 		marketTime.value = `下次开盘: ${nextOpen.toLocaleString()} ${days[nextOpen.getDay()]}`;
 	}
 };
+const getStockCodes = () => {
+	if (!data.value) {
+		console.error("数据尚未加载");
+		return;
+	}
 
+	const codes: string[] = [];
+
+	const pushStockCodes = (items: any[], key: string) => {
+		if (Array.isArray(items)) {
+			items.forEach((item) => {
+				const shcode = "sh" + item[key];
+				codes.push(shcode);
+				const szcode = "sz" + item[key];
+				codes.push(szcode);
+			});
+		}
+	};
+
+	// 遍历不同的数组属性
+	pushStockCodes(data.value.resultListByGainDESC, "code");
+	pushStockCodes(data.value.resultListByTotal, "code");
+	pushStockCodes(data.value.resultListByGain, "code");
+	pushStockCodes(data.value.resultListByGainSpeed, "code");
+
+	stockCodes.value = codes;
+};
 const getMarketData = async () => {
 	try {
 		await getMarketAPI();
 		console.log("获取market数据成功", data.value);
+		if (data.value) {
+			getStockCodes();
+		}
 	} catch (error) {
 		console.error("获取market数据失败", error);
 	}
