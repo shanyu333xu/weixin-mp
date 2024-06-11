@@ -20,7 +20,6 @@ export const fetchStockData = (stockCodes: string[]): Promise<StockData[]> => {
 					if (!stockCode) return;
 					if (!values) return;
 					const elements = values.replace(/(^"|"$)/g, "").split(",");
-					if (!elements[0]) return;
 					const stockData: OriStockData = {
 						name: elements[0],
 						code: stockCode,
@@ -58,6 +57,8 @@ export const fetchStockData = (stockCodes: string[]): Promise<StockData[]> => {
 						date: elements[30],
 						time: elements[31],
 					};
+					if (!stockData.name) return;
+					if (!stockData.currentPrice) return;
 					oriStockDataList.push(stockData);
 				});
 

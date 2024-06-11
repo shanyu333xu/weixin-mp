@@ -20,7 +20,7 @@
 	<!-- 股票列表 -->
 	<view class="stock_table">
 		<!-- 表头 -->
-		<view class="stock_head" role="row">
+		<view v-if="!button" class="stock_head" role="row">
 			<view class="stock_cell" role="columnheader">股票名称</view>
 			<view
 				class="stock_cell right"
@@ -118,9 +118,11 @@
 					negative: item.speedPercent < 0,
 				}"
 				role="cell"
+				v-if="!button"
 			>
 				<text class="stock_number">{{ item.speedPercent }}%</text>
 			</view>
+			<FavoriteButton v-if="button" :code="item.code" />
 		</navigator>
 	</view>
 	<view v-if="!maxRows" class="loading-text">{{
@@ -137,6 +139,7 @@ const props = defineProps<{
 	stockCodes: string[];
 	maxRows?: number;
 	quickSort?: boolean;
+	button?: boolean;
 }>();
 const loaded = ref(0);
 const stocks = ref<StockData[]>([]);
