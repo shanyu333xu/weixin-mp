@@ -1,5 +1,4 @@
 // src\pages\market\service\marketNews.ts
-// src/pages/market/service/marketNews.ts
 import { ref } from "vue";
 import type { NewsItem } from "../types/marketNews";
 
