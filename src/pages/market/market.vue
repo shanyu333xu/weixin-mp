@@ -169,18 +169,6 @@ const szcIndex = ref<StockData | null>(null);
 const cybIndex = ref<StockData | null>(null);
 const stockCodes = ref<string[]>([]);
 
-const search = (searchText) => {
-	serched.value = true;
-	// 将搜索文本转换为小写，以便进行不区分大小写的匹配
-	const query = searchText.toLowerCase();
-	// 过滤出与搜索文本匹配的股票数据
-	stockCodes.value = BaseStocksList.filter(
-		(stock: BaseStockData) =>
-			stock.name.toLowerCase().includes(query) ||
-			stock.code.toLowerCase().includes(query) ||
-			stock.industry?.toLowerCase().includes(query)
-	).map((stock: BaseStockData) => stock.code);
-};
 import type { ThsStockListInstance } from "../types/components";
 const useStockList = () => {
 	// 组件实例
