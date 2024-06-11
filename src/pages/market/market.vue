@@ -61,6 +61,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { fetchStockData } from "../../service/stockService";
 import { StockData } from "../../types/stockService";
 import { useStockList } from "../../composables/exStockList";
+import { getMarketAPI, data } from "./service/marketBase";
 
 const szIndex = ref<StockData | null>(null);
 const szcIndex = ref<StockData | null>(null);
@@ -165,9 +166,17 @@ const updateMarketStatus = () => {
 		marketTime.value = `下次开盘: ${nextOpen.toLocaleString()} ${days[nextOpen.getDay()]}`;
 	}
 };
-
+const getMarketData = async () => {
+	try {
+		await getMarketAPI();
+		console.log(data.value);
+	} catch (error) {
+		console.error("获取市场数据失败", error);
+	}
+};
 onMounted(async () => {
 	await getStocks();
+	await getMarketData();
 	updateMarketStatus();
 	setInterval(() => {
 		updateMarketStatus();
