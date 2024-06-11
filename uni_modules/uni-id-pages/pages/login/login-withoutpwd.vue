@@ -25,7 +25,7 @@
 				<uni-easyinput :focus="focusPhone" @blur="focusPhone = false" class="input-box" type="number"
 					:inputBorder="false" v-model="phone" maxlength="11" placeholder="请输入手机号" />
 			</view>
-			<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>
+			<!-- <uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements> -->
 			<button class="uni-btn" type="primary" @click="toSmsPage">获取验证码</button>
 		</template>
 	<!-- 	固定定位的快捷登录按钮
