@@ -23,12 +23,14 @@
 					<navigator
 						:url="`/components/NewsDetail/NewsDetail?url=${item.url}`"
 						class="news-title"
-						>{{ truncateText(item.title) }}</navigator
+						@click.stop
 					>
+						{{ truncateText(item.title) }}
+					</navigator>
 				</view>
 			</view>
-		</view></view
-	>
+		</view>
+	</view>
 </template>
 
 <script lang="ts" setup>
@@ -54,8 +56,6 @@ const truncateText = (text: string, length: number = 18) => {
 };
 
 const switchTitle = () => {
-	console.log(newsData.value);
-
 	if (!isExpanded.value && newsData.value.length > 1) {
 		currentIndex.value = (currentIndex.value + 1) % newsData.value.length;
 	}
