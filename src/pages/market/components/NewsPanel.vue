@@ -11,7 +11,7 @@
 				<text class="header-title">
 					{{ isExpanded ? "" : truncatedTitle }}
 				</text>
-				<text class="header-status">{{ isExpanded ? "收起" : "展开" }}</text>
+				<text class="header-status">{{ isExpanded ? "🔼" : "🔽" }}</text>
 			</view>
 			<view class="panel-body" v-if="isExpanded">
 				<view
@@ -19,7 +19,10 @@
 					:key="item.seq"
 					class="news-item"
 				>
-					<text class="news-index">{{ index + 1 }}.</text>
+					<img
+						:src="`/static/images/数字${index + 1}.png`"
+						class="stock_image"
+					/>
 					<navigator
 						:url="`/components/NewsDetail/NewsDetail?url=${item.url}`"
 						class="news-title"
@@ -105,7 +108,6 @@ onMounted(async () => {
 }
 
 .header-status {
-	color: blue;
 	cursor: pointer;
 }
 
@@ -126,5 +128,12 @@ onMounted(async () => {
 .news-title {
 	flex: 1;
 	text-decoration: none;
+}
+
+.stock_image {
+	width: 15px;
+	height: 15px;
+	margin-right: 10px;
+	object-fit: cover;
 }
 </style>
