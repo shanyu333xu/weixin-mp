@@ -1,162 +1,165 @@
 <!-- src\pages\market\market.vue -->
 <template>
-	<view class="container">
-		<NavigationBar />
-		<!-- 搜索框,其实是跳转到搜索页面 -->
-		<view class="searchbox">
-			<navigator
-				class="searchnavigator"
-				url="/src/pages/search/search"
-				open-type="navigate"
-				hover-class="navigator-hover"
-			>
-				<icon type="search" />
-				<text>搜股票名称/股票代码</text>
-			</navigator>
-		</view>
-		<!-- 大盘信息 -->
-		<view class="market-status">
-			<image :src="marketStatusIcon" class="status-icon"></image>
-			<text class="status-text">{{ marketStatus }}</text>
-		</view>
-		<view class="market-time">
-			<text class="time-text">{{ marketTime }}</text>
-		</view>
-		<view class="indices">
-			<view
-				v-if="szIndex"
-				:class="['index-box', szIndex.change >= 0 ? 'up' : 'down']"
-			>
-				<text class="index-name">上证综指</text>
-				<text class="index-price">{{ szIndex.currentPrice }}</text>
-				<text class="index-change"
-					>{{ szIndex.change }} ({{ szIndex.changePercent }}%)</text
-				>
+    <view class="container">
+        <NavigationBar />
+        <!-- 大盘信息 -->
+        <view class="market-info">
+            <view class="market-status">
+                <image :src="marketStatusIcon" class="status-icon"></image>
+                <text class="status-text">{{ marketStatus }}</text>
+            </view>
+			<!-- 搜索框 -->
+			<view class="searchbox">
+			    <navigator
+			        class="searchnavigator"
+			        url="/src/pages/search/search"
+			        open-type="navigate"
+			        hover-class="navigator-hover"
+			    >
+			        <icon type="search" />
+			        <text>搜股票名称/股票代码</text>
+			    </navigator>
 			</view>
-			<view
-				v-if="szcIndex"
-				:class="['index-box', szcIndex.change >= 0 ? 'up' : 'down']"
-			>
-				<text class="index-name">深证成指</text>
-				<text class="index-price">{{ szcIndex.currentPrice }}</text>
-				<text class="index-change"
-					>{{ szcIndex.change }} ({{ szcIndex.changePercent }}%)</text
-				>
-			</view>
-			<view
-				v-if="cybIndex"
-				:class="['index-box', cybIndex.change >= 0 ? 'up' : 'down']"
-			>
-				<text class="index-name">创业板指</text>
-				<text class="index-price">{{ cybIndex.currentPrice }}</text>
-				<text class="index-change"
-					>{{ cybIndex.change }} ({{ cybIndex.changePercent }}%)</text
-				>
-			</view>
-		</view>
-		<!-- 同花顺头条 -->
-		<!-- 今日板块 -->
-		<uni-title type="h1" title="今日板块"></uni-title>
-		<view>
-			<scroll-view scroll-x class="main-scroll-view">
-				<!-- 热门概念 -->
-				<view
-					v-if="data && data.hotConcept && data.hotConcept.length"
-					class="section"
-				>
-					<view class="section-title">热门概念</view>
-					<view class="heat-items-container">
-						<view
-							v-for="(item, index) in data.hotConcept"
-							:key="index"
-							class="heat-item"
-						>
-							<view class="block-name">{{ item.blockName }}</view>
-							<view
-								class="block-gain"
-								:class="item.blockGain >= 0 ? 'positive' : 'negative'"
-								>{{ item.blockGain }}%</view
-							>
-							<view class="shares-name">{{ item.sharesName }}</view>
-							<view
-								class="shares-gain"
-								:class="item.sharesGain >= 0 ? 'positive' : 'negative'"
-								>{{ item.sharesGain }}%</view
-							>
-						</view>
-					</view>
-				</view>
+        </view>
+        <view class="market-time">
+            {{ marketTime }}
+        </view>
+        <view class="indices">
+            <view
+                v-if="szIndex"
+                :class="['index-box', szIndex.change >= 0 ? 'up' : 'down']"
+            >
+                <text class="index-name">上证综指</text>
+                <text class="index-price">{{ szIndex.currentPrice }}</text>
+                <text class="index-change"
+                    >{{ szIndex.change }} ({{ szIndex.changePercent }}%)</text
+                >
+            </view>
+            <view
+                v-if="szcIndex"
+                :class="['index-box', szcIndex.change >= 0 ? 'up' : 'down']"
+            >
+                <text class="index-name">深证成指</text>
+                <text class="index-price">{{ szcIndex.currentPrice }}</text>
+                <text class="index-change"
+                    >{{ szcIndex.change }} ({{ szcIndex.changePercent }}%)</text
+                >
+            </view>
+            <view
+                v-if="cybIndex"
+                :class="['index-box', cybIndex.change >= 0 ? 'up' : 'down']"
+            >
+                <text class="index-name">创业板指</text>
+                <text class="index-price">{{ cybIndex.currentPrice }}</text>
+                <text class="index-change"
+                    >{{ cybIndex.change }} ({{ cybIndex.changePercent }}%)</text
+                >
+            </view>
+        </view>
+        <!-- 同花顺头条 -->
+        <!-- 今日板块 -->
+        <uni-title type="h1" title="今日板块"></uni-title>
+        <view>
+            <scroll-view scroll-x class="main-scroll-view">
+                <!-- 热门概念 -->
+                <view
+                    v-if="data && data.hotConcept && data.hotConcept.length"
+                    class="section"
+                >
+                    <view class="section-title">热门概念</view>
+                    <view class="heat-items-container">
+                        <view
+                            v-for="(item, index) in data.hotConcept"
+                            :key="index"
+                            class="heat-item"
+                        >
+                            <view class="block-name">{{ item.blockName }}</view>
+                            <view
+                                class="block-gain"
+                                :class="item.blockGain >= 0 ? 'positive' : 'negative'"
+                                >{{ item.blockGain }}%</view
+                            >
+                            <view class="shares-name">{{ item.sharesName }}</view>
+                            <view
+                                class="shares-gain"
+                                :class="item.sharesGain >= 0 ? 'positive' : 'negative'"
+                                >{{ item.sharesGain }}%</view
+                            >
+                        </view>
+                    </view>
+                </view>
 
-				<!-- 热门行业 -->
-				<view
-					v-if="data && data.hotIndustry && data.hotIndustry.length"
-					class="section"
-				>
-					<view class="section-title">热门行业</view>
-					<view class="heat-items-container">
-						<view
-							v-for="(item, index) in data.hotIndustry"
-							:key="index"
-							class="heat-item"
-						>
-							<view class="block-name">{{ item.blockName }}</view>
-							<view
-								class="block-gain"
-								:class="item.blockGain >= 0 ? 'positive' : 'negative'"
-								>{{ item.blockGain }}%</view
-							>
-							<view class="shares-name">{{ item.sharesName }}</view>
-							<view
-								class="shares-gain"
-								:class="item.sharesGain >= 0 ? 'positive' : 'negative'"
-								>{{ item.sharesGain }}%</view
-							>
-						</view>
-					</view>
-				</view>
+                <!-- 热门行业 -->
+                <view
+                    v-if="data && data.hotIndustry && data.hotIndustry.length"
+                    class="section"
+                >
+                    <view class="section-title">热门行业</view>
+                    <view class="heat-items-container">
+                        <view
+                            v-for="(item, index) in data.hotIndustry"
+                            :key="index"
+                            class="heat-item"
+                        >
+                            <view class="block-name">{{ item.blockName }}</view>
+                            <view
+                                class="block-gain"
+                                :class="item.blockGain >= 0 ? 'positive' : 'negative'"
+                                >{{ item.blockGain }}%</view
+                            >
+                            <view class="shares-name">{{ item.sharesName }}</view>
+                            <view
+                                class="shares-gain"
+                                :class="item.sharesGain >= 0 ? 'positive' : 'negative'"
+                                >{{ item.sharesGain }}%</view
+                            >
+                        </view>
+                    </view>
+                </view>
 
-				<!-- 5日持续热度板块 -->
-				<view
-					v-if="
-						data &&
-						data.maximumHeatInFiveDays &&
-						data.maximumHeatInFiveDays.length
-					"
-					class="section"
-				>
-					<view class="section-title">5日持续热度板块</view>
-					<view class="heat-items-container">
-						<view
-							v-for="(item, index) in data.maximumHeatInFiveDays"
-							:key="index"
-							class="heat-item"
-						>
-							<view class="block-name">{{ item.blockName }}</view>
-							<view
-								class="block-gain"
-								:class="item.blockGain >= 0 ? 'positive' : 'negative'"
-								>{{ item.blockGain }}%</view
-							>
-							<view class="shares-name">{{ item.sharesName }}</view>
-							<view
-								class="shares-gain"
-								:class="item.sharesGain >= 0 ? 'positive' : 'negative'"
-								>{{ item.sharesGain }}%</view
-							>
-						</view>
-					</view>
-				</view>
-			</scroll-view>
-		</view>
-		<!-- 股票排行 -->
-		<ThsStockList
-			ref="stockListRef"
-			:stockCodes="stockCodes"
-			:quickSort="true"
-			:maxRows="10"
-		/>
-	</view>
+                <!-- 5日持续热度板块 -->
+                <view
+                    v-if="
+                        data &&
+                        data.maximumHeatInFiveDays &&
+                        data.maximumHeatInFiveDays.length
+                    "
+                    class="section"
+                >
+                    <view class="section-title">5日持续热度板块</view>
+                    <view class="heat-items-container">
+                        <view
+                            v-for="(item, index) in data.maximumHeatInFiveDays"
+                            :key="index"
+                            class="heat-item"
+                        >
+                            <view class="block-name">{{ item.blockName }}</view>
+                            <view
+                                class="block-gain"
+                                :class="item.blockGain >= 0 ? 'positive' : 'negative'"
+                                >{{ item.blockGain }}%</view
+                            >
+                            <view class="shares-name">{{ item.sharesName }}</view>
+                            <view
+                                class="shares-gain"
+                                :class="item.sharesGain >= 0 ? 'positive' : 'negative'"
+                                >{{ item.sharesGain }}%</view
+                            >
+                        </view>
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
+        <!-- 股票排行 -->
+        <ThsStockList
+            ref="stockListRef"
+            :stockCodes="stockCodes"
+            :quickSort="true"
+            :maxRows="10"
+        />
+    </view>
 </template>
+
 
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from "vue";
@@ -306,27 +309,53 @@ onMounted(async () => {
 
 <style>
 .container {
-	padding: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.market-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 确保开闭盘状态和搜索框之间的空间 */
+    margin-bottom: 5px; /* 添加一些底部空间 */
 }
 
 .market-status {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
+    font-size: 28px; /* 增大开闭盘状态的字体 */
+    margin-right: 20px; /* 给搜索框一些空间 */
 }
 
 .status-icon {
-	width: 20px;
-	height: 20px;
-	margin-right: 5px;
+    width: 35px; /* 调整图标大小 */
+    height: 35px;
+    margin-right: 10px;
 }
 
 .status-text {
-	font-size: 18px;
+    font-size: 28px; /* 增大字体 */
+}
+
+.searchbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    margin-left: auto; /* 使其靠右 */
+}
+
+.searchnavigator {
+    padding: 0px 20px;
 }
 
 .market-time {
-	margin-top: 5px;
-	font-size: 14px;
+    font-size: 14px; /* 调小时间字体 */
+    text-align: left; /* 使时间左对齐 */
+    margin-top: 5px; /* 添加一些顶部空间 */
 }
 
 .indices {
@@ -380,17 +409,6 @@ onMounted(async () => {
 	font-size: 12px;
 }
 
-.searchbox {
-	display: flex;
-	justify-content: center;
-	padding: 5px;
-	margin: 10px;
-	border: 1px solid #000000;
-	border-radius: 20px;
-}
-.searchnavigator {
-	padding: 0px 60px 0px 60px;
-}
 .container {
 	background-color: #ffffff;
 	height: 100%;
