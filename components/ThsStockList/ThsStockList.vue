@@ -297,15 +297,16 @@ button {
 
 .buttons {
   display: flex;
+  margin:0;
 }
 
 .button {
-  padding: 5px 10px;
-  margin-right: 10px;
+  padding: 5px 5px;
+  font-size: 35rpx;
   cursor: pointer;
 }
 .title {
-  font-size: large;
+  font-size: 50rpx;
   font-weight: bold;
 }
 // 加载提示文字
