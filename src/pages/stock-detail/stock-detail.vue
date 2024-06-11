@@ -206,7 +206,7 @@ export default {
 					url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=smsCode",
 				});
 			} else {
-				uni.navigateTo({
+				uni.switchTab({
 					url: `/src/pages/trade/trade?code=${this.code}`,
 				});
 			}
