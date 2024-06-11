@@ -2,14 +2,15 @@
 <template>
 	<!-- 快捷排序 -->
 	<view v-if="quickSort">
-		<view class="title">股票排行</view>
+		<uni-title type="h1" title="股票排行"></uni-title>
 		<view class="buttons">
 			<view class="buttons">
 				<view
 					class="button"
+					:class="{ active: activeIndex === index }"
 					v-for="(sort, index) in sortOptions"
 					:key="index"
-					@click="sortBy(sort.key, sort.order)"
+					@click="sortBy(sort.key, sort.order, index)"
 				>
 					{{ sort.text }}
 				</view>
@@ -189,8 +190,11 @@ function toggleSortOrder(key: string) {
 	}
 }
 
+// 定义响应式变量来跟踪当前激活的按钮索引
+const activeIndex = ref<number | null>(null);
 // 通用排序方法
-function sortBy(key: string, order: "asc" | "desc") {
+function sortBy(key: string, order: "asc" | "desc", index: number) {
+	activeIndex.value = index;
 	sortKey.value = key;
 	sortOrder.value = order;
 }
@@ -332,9 +336,17 @@ button {
 
 .button {
 	padding: 5px 5px;
-	font-size: 35rpx;
+	font-size: 28rpx;
 	cursor: pointer;
 }
+
+.button.active {
+	font-weight: bold;
+	background: linear-gradient(to bottom, transparent 50%, orange 50%);
+	background-size: 100% 100%;
+	font-size: 38rpx;
+}
+
 .title {
 	font-size: 50rpx;
 	font-weight: bold;

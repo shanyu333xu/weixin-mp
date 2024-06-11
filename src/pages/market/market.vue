@@ -1,18 +1,19 @@
 <template>
-	<NavigationBar />
-	<!-- 搜索框,其实是跳转到搜索页面 -->
-	<view class="searchbox">
-		<navigator
-			class="searchnavigator"
-			url="/src/pages/search/search"
-			open-type="navigate"
-			hover-class="navigator-hover"
-		>
-			<icon type="search" />
-			<text>搜股票名称/股票代码</text>
-		</navigator>
-	</view>
 	<view class="container">
+		<NavigationBar />
+		<!-- 搜索框,其实是跳转到搜索页面 -->
+		<view class="searchbox">
+			<navigator
+				class="searchnavigator"
+				url="/src/pages/search/search"
+				open-type="navigate"
+				hover-class="navigator-hover"
+			>
+				<icon type="search" />
+				<text>搜股票名称/股票代码</text>
+			</navigator>
+		</view>
+		<!-- 大盘信息 -->
 		<view class="market-status">
 			<image :src="marketStatusIcon" class="status-icon"></image>
 			<text class="status-text">{{ marketStatus }}</text>
@@ -52,8 +53,106 @@
 				>
 			</view>
 		</view>
+		<!-- 今日板块 -->
+		<uni-title type="h1" title="今日板块"></uni-title>
+		<view>
+			<scroll-view scroll-x class="main-scroll-view">
+				<!-- 热门概念 -->
+				<view
+					v-if="data && data.hotConcept && data.hotConcept.length"
+					class="section"
+				>
+					<view class="section-title">热门概念</view>
+					<view class="heat-items-container">
+						<view
+							v-for="(item, index) in data.hotConcept"
+							:key="index"
+							class="heat-item"
+						>
+							<view class="block-name">{{ item.blockName }}</view>
+							<view
+								class="block-gain"
+								:class="item.blockGain >= 0 ? 'positive' : 'negative'"
+								>{{ item.blockGain }}%</view
+							>
+							<view class="shares-name">{{ item.sharesName }}</view>
+							<view
+								class="shares-gain"
+								:class="item.sharesGain >= 0 ? 'positive' : 'negative'"
+								>{{ item.sharesGain }}%</view
+							>
+						</view>
+					</view>
+				</view>
+
+				<!-- 热门行业 -->
+				<view
+					v-if="data && data.hotIndustry && data.hotIndustry.length"
+					class="section"
+				>
+					<view class="section-title">热门行业</view>
+					<view class="heat-items-container">
+						<view
+							v-for="(item, index) in data.hotIndustry"
+							:key="index"
+							class="heat-item"
+						>
+							<view class="block-name">{{ item.blockName }}</view>
+							<view
+								class="block-gain"
+								:class="item.blockGain >= 0 ? 'positive' : 'negative'"
+								>{{ item.blockGain }}%</view
+							>
+							<view class="shares-name">{{ item.sharesName }}</view>
+							<view
+								class="shares-gain"
+								:class="item.sharesGain >= 0 ? 'positive' : 'negative'"
+								>{{ item.sharesGain }}%</view
+							>
+						</view>
+					</view>
+				</view>
+
+				<!-- 5日持续热度板块 -->
+				<view
+					v-if="
+						data &&
+						data.maximumHeatInFiveDays &&
+						data.maximumHeatInFiveDays.length
+					"
+					class="section"
+				>
+					<view class="section-title">5日持续热度板块</view>
+					<view class="heat-items-container">
+						<view
+							v-for="(item, index) in data.maximumHeatInFiveDays"
+							:key="index"
+							class="heat-item"
+						>
+							<view class="block-name">{{ item.blockName }}</view>
+							<view
+								class="block-gain"
+								:class="item.blockGain >= 0 ? 'positive' : 'negative'"
+								>{{ item.blockGain }}%</view
+							>
+							<view class="shares-name">{{ item.sharesName }}</view>
+							<view
+								class="shares-gain"
+								:class="item.sharesGain >= 0 ? 'positive' : 'negative'"
+								>{{ item.sharesGain }}%</view
+							>
+						</view>
+					</view>
+				</view>
+			</scroll-view>
+		</view>
+		<!-- 股票排行 -->
+		<ThsStockList
+			ref="stockListRef"
+			:stockCodes="stockCodes"
+			:quickSort="true"
+		/>
 	</view>
-	<ThsStockList ref="stockListRef" :stockCodes="stockCodes" :quickSort="true" />
 </template>
 
 <script lang="ts" setup>
@@ -166,12 +265,13 @@ const updateMarketStatus = () => {
 		marketTime.value = `下次开盘: ${nextOpen.toLocaleString()} ${days[nextOpen.getDay()]}`;
 	}
 };
+
 const getMarketData = async () => {
 	try {
 		await getMarketAPI();
-		console.log(data.value);
+		console.log("获取market数据成功", data.value);
 	} catch (error) {
-		console.error("获取市场数据失败", error);
+		console.error("获取market数据失败", error);
 	}
 };
 onMounted(async () => {
@@ -230,11 +330,11 @@ onMounted(async () => {
 	margin-right: 0;
 }
 
-.index-box.up {
+.up {
 	background-color: red;
 }
 
-.index-box.down {
+.down {
 	background-color: green;
 }
 
@@ -269,6 +369,79 @@ onMounted(async () => {
 	border-radius: 20px;
 }
 .searchnavigator {
-	padding: 0px 80px 0px 80px;
+	padding: 0px 60px 0px 60px;
+}
+.container {
+	background-color: #ffffff;
+	height: 100%;
+	padding-top: var(-window-top);
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.main-scroll-view {
+	display: flex;
+	flex-direction: row;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.section {
+	display: inline-block;
+	width: 300px;
+	margin: 0px 10px 10px 10px;
+	vertical-align: top;
+	border-radius: 20px; /* 圆角 */
+	border: 1px solid #ddd;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1); /* 阴影 */
+}
+
+.section-title {
+	border-radius: 20px 0px 20px 0px; /* 左上角和右下角的圆角 */
+	font-size: 16px;
+	background-color: red;
+	color: white;
+	padding: 10px;
+	display: inline-block;
+}
+
+.heat-items-container {
+	display: flex;
+	flex-direction: row;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.heat-item {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+}
+
+.block-name {
+	font-size: 16px;
+	margin: 5px 0;
+}
+.block-gain {
+	font-size: 18px;
+	margin: 5px 0;
+}
+
+.shares-name,
+.shares-gain {
+	font-size: 12px;
+	margin: 5px 0;
+}
+
+.positive {
+	color: red;
+}
+.negative {
+	color: green;
 }
 </style>

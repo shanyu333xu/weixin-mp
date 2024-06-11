@@ -1,21 +1,23 @@
 <template>
-	<view class="navigation-bar"></view>
-	<view class="searchbox">
-		<navigator
-			class="searchnavigator"
-			url="/src/pages/search/search"
-			open-type="navigate"
-			hover-class="navigator-hover"
-		>
-			<icon type="search" />
-			<text>搜股票名称/股票代码</text>
-		</navigator>
+	<view class="container"
+		><view class="navigation-bar"></view>
+		<view class="searchbox">
+			<navigator
+				class="searchnavigator"
+				url="/src/pages/search/search"
+				open-type="navigate"
+				hover-class="navigator-hover"
+			>
+				<icon type="search" />
+				<text>搜股票名称/股票代码</text>
+			</navigator>
+		</view>
+		<ThsStockList :stockCodes="stockCodes" />
+		<button class="button" v-if="!hasLogin" @click="goToLogin">
+			授权同步自选股
+		</button>
+		<button class="button" v-if="hasLogin" @click="goSearch">添加自选股</button>
 	</view>
-	<ThsStockList :stockCodes="stockCodes" />
-	<button class="button" v-if="!hasLogin" @click="goToLogin">
-		授权同步自选股
-	</button>
-	<button class="button" v-if="hasLogin" @click="goSearch">添加自选股</button>
 </template>
 
 <script>
