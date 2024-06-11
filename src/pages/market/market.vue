@@ -1,3 +1,4 @@
+<!-- src\pages\market\market.vue -->
 <template>
 	<view class="container">
 		<NavigationBar />
@@ -53,6 +54,7 @@
 				>
 			</view>
 		</view>
+		<!-- 同花顺头条 -->
 		<!-- 今日板块 -->
 		<uni-title type="h1" title="今日板块"></uni-title>
 		<view>
@@ -161,7 +163,6 @@ import { ref, onMounted, onUnmounted } from "vue";
 import { fetchStockData } from "../../service/stockService";
 import { StockData } from "../../types/stockService";
 import { useStockList } from "../../composables/exStockList";
-import { getMarketAPI, data } from "./service/marketBase";
 
 const szIndex = ref<StockData | null>(null);
 const szcIndex = ref<StockData | null>(null);
@@ -281,6 +282,8 @@ const getStockCodes = () => {
 
 	stockCodes.value = codes;
 };
+
+import { getMarketAPI, data } from "./service/marketBase";
 const getMarketData = async () => {
 	try {
 		await getMarketAPI();
@@ -292,9 +295,20 @@ const getMarketData = async () => {
 		console.error("获取market数据失败", error);
 	}
 };
+import { getMarketNewsAPI, newsData } from "./service/marketNews";
+
+const getMarketNewsData = async () => {
+	try {
+		await getMarketNewsAPI();
+		console.log("获取新闻数据成功", newsData.value);
+	} catch (error) {
+		console.error("获取新闻数据失败", error);
+	}
+};
 onMounted(async () => {
 	await getStocks();
 	await getMarketData();
+	await getMarketNewsData();
 	updateMarketStatus();
 	setInterval(() => {
 		updateMarketStatus();
