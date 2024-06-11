@@ -5,7 +5,7 @@
     "read": true,
     "create": "auth.uid!=null",
     "update": "doc.userid == auth.uid",
-    "delete": false
+    "delete": "doc.userid == auth.uid"
   },
   "properties": {
     "_id": {

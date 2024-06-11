@@ -1,11 +1,12 @@
 <!-- 免密登录页 -->
 <template>
+     <BackButton :goBackHandler="goBack"></BackButton>
 	<view class="uni-content">
 		<view class="login-logo">
 			<image :src="logo"></image>
 		</view>
 		<!-- 顶部文字 -->
-		<text class="title">请选择登录方式</text>
+		<text class="title">请输入手机号码</text>
 		<!-- 快捷登录框 当url带参数时有效 -->
 		<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
 			<text class="tip">将根据第三方账号服务平台的授权范围获取你的信息</text>
@@ -27,8 +28,8 @@
 			<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>
 			<button class="uni-btn" type="primary" @click="toSmsPage">获取验证码</button>
 		</template>
-		<!-- 固定定位的快捷登录按钮 -->
-		<uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login>
+	<!-- 	固定定位的快捷登录按钮
+		<uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login> -->
 	</view>
 </template>
 
@@ -123,6 +124,11 @@
 			//#endif
 		},
 		methods: {
+               goBack() {
+                    uni.switchTab({
+                        url: '/src/pages/market/market'
+                    });
+                },
 			showCurrentWebview(){
 				// 恢复当前页面窗体的显示 一键登录，默认不显示当前窗口
 				currentWebview.setStyle({

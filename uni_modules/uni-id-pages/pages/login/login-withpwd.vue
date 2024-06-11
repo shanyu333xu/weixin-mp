@@ -1,5 +1,6 @@
 <!-- 账号密码登录页 -->
 <template>
+    <BackButton/>
 	<view class="uni-content">
 		<view class="login-logo">
 			<image :src="logo"></image>

@@ -1,10 +1,12 @@
 <template>
   <view>
+      <view class="news">新闻</view>
     <view v-for="item in listArr" :key="item.docid" @click="goDetail(item.docid)" class="item">
       <view class="text">
         <view class="title">{{ item.title }}</view>
         <view class="info">
-          <span>{{ item.source }}</span>
+          <text>{{ item.source }}</text>
+            <text>{{ item.ptime }}</text>
         </view>
       </view>
     </view>
@@ -18,7 +20,7 @@ interface Article {
   docid: string;
   title: string;
   source: string;
-  // Add more properties if needed
+    ptime:string
 }
 
 const listArr = ref<Article[]>([]);
@@ -63,6 +65,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+    .news{
+        font-size: 18px;
+        font-weight: bolder;
+    }
 .content {
   padding: 30rpx;
 }
@@ -100,7 +106,7 @@ onMounted(() => {
   color: #888;
 }
 
-.info .text {
+.info text {
   padding-right: 20rpx;
 }
 </style>
