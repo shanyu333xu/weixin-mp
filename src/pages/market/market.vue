@@ -2,22 +2,24 @@
 <template>
 	<view class="container">
 		<NavigationBar />
-		<!-- 搜索框,其实是跳转到搜索页面 -->
-		<view class="searchbox">
-			<navigator
-				class="searchnavigator"
-				url="/src/pages/search/search"
-				open-type="navigate"
-				hover-class="navigator-hover"
-			>
-				<icon type="search" />
-				<text>搜股票名称/股票代码</text>
-			</navigator>
-		</view>
 		<!-- 大盘信息 -->
-		<view class="market-status">
-			<image :src="marketStatusIcon" class="status-icon"></image>
-			<text class="status-text">{{ marketStatus }}</text>
+		<view class="market-info">
+			<view class="market-status">
+				<image :src="marketStatusIcon" class="status-icon"></image>
+				<text class="status-text">{{ marketStatus }}</text>
+			</view>
+			<!-- 搜索框 -->
+			<view class="searchbox">
+				<navigator
+					class="searchnavigator"
+					url="/src/pages/search/search"
+					open-type="navigate"
+					hover-class="navigator-hover"
+				>
+					<icon type="search" />
+					<text>搜股票名称/股票代码</text>
+				</navigator>
+			</view>
 		</view>
 		<view class="market-time">
 			<text class="time-text">{{ marketTime }}</text>
@@ -173,7 +175,7 @@ const szcIndex = ref<StockData | null>(null);
 const cybIndex = ref<StockData | null>(null);
 const stockCodes = ref<string[]>([]);
 
-import RiseFallSection from './RiseFallSection.vue';
+import RiseFallSection from "./RiseFallSection.vue";
 import type { ThsStockListInstance } from "../types/components";
 const useStockList = () => {
 	// 组件实例
@@ -301,26 +303,52 @@ onMounted(async () => {
 <style>
 .container {
 	padding: 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+.market-info {
+	display: flex;
+	align-items: center;
+	justify-content: space-between; /* 确保开闭盘状态和搜索框之间的空间 */
+	margin-bottom: 5px; /* 添加一些底部空间 */
 }
 
 .market-status {
 	display: flex;
 	align-items: center;
+	font-size: 28px; /* 增大开闭盘状态的字体 */
+	margin-right: 20px; /* 给搜索框一些空间 */
 }
 
 .status-icon {
-	width: 20px;
-	height: 20px;
-	margin-right: 5px;
+	width: 35px; /* 调整图标大小 */
+	height: 35px;
+	margin-right: 10px;
 }
 
 .status-text {
-	font-size: 18px;
+	font-size: 28px; /* 增大字体 */
+}
+
+.searchbox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 5px;
+	border: 1px solid #000000;
+	border-radius: 20px;
+	margin-left: auto; /* 使其靠右 */
+}
+
+.searchnavigator {
+	padding: 0px 20px;
 }
 
 .market-time {
-	margin-top: 5px;
-	font-size: 14px;
+	font-size: 14px; /* 调小时间字体 */
+	text-align: left; /* 使时间左对齐 */
+	margin-top: 5px; /* 添加一些顶部空间 */
 }
 
 .indices {
@@ -374,19 +402,6 @@ onMounted(async () => {
 	font-size: 12px;
 }
 
-.searchbox {
-	display: flex;
-	justify-content: center;
-	padding: 5px;
-	margin: 10px;
-	border: 1px solid #000000;
-	border-radius: 20px;
-}
-
-.searchnavigator {
-	padding: 0px 60px 0px 60px;
-}
-
 .container {
 	background-color: #ffffff;
 	height: 100%;
@@ -412,16 +427,13 @@ onMounted(async () => {
 	width: 300px;
 	margin: 0px 10px 10px 10px;
 	vertical-align: top;
-	border-radius: 20px;
-	/* 圆角 */
+	border-radius: 20px; /* 圆角 */
 	border: 1px solid #ddd;
-	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
-	/* 阴影 */
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1); /* 阴影 */
 }
 
 .section-title {
-	border-radius: 20px 0px 20px 0px;
-	/* 左上角和右下角的圆角 */
+	border-radius: 20px 0px 20px 0px; /* 左上角和右下角的圆角 */
 	font-size: 16px;
 	background-color: red;
 	color: white;
@@ -467,6 +479,6 @@ onMounted(async () => {
 }
 
 .rise-fall-section {
-    margin-top: 15px; /* 为涨跌条组件创建顶部间距 */
-  }
+	margin-top: 15px; /* 为涨跌条组件创建顶部间距 */
+}
 </style>
