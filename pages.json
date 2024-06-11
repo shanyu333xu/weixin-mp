@@ -161,6 +161,12 @@
             "selectedIconPath": "static/images/add.png",
             "pagePath": "src/pages/favorites/favorites",
            "text": "自选"
+          },
+          {
+            "iconPath": "static/images/trade.png",
+            "selectedIconPath": "static/images/trade.png",
+            "pagePath": "src/pages/trade/trade",
+           "text": "交易"
           }
           ]
          },
