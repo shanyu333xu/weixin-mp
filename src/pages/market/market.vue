@@ -220,10 +220,12 @@ const updateMarketStatus = () => {
 	const now = new Date();
 	const hours = now.getHours();
 	const minutes = now.getMinutes();
+    //开闭盘
 	const isOpen =
 		((hours > 9 || (hours === 9 && minutes >= 30)) &&
 			(hours < 11 || (hours === 11 && minutes < 30))) ||
 		(hours >= 13 && hours < 15);
+    // const isOpen =false;    
 	const days = [
 		"星期天",
 		"星期一",
@@ -296,7 +298,7 @@ onMounted(async () => {
 	updateMarketStatus();
 	setInterval(() => {
 		updateMarketStatus();
-	}, 60000); // 每分钟更新一次状态
+	}, 1000); // 每s更新一次状态
 });
 </script>
 

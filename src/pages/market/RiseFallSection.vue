@@ -1,9 +1,9 @@
 <template>
   <view class="rise-fall-section">
     <view class="progress-bar">
-      <view class="progress-bar-segment green" :style="{ flex: riseCount }"></view>
+      <view class="progress-bar-segment green" :style="{ flex: fallCount }"></view>
       <view class="progress-bar-segment gray" :style="{ flex: neutralCount }"></view>
-      <view class="progress-bar-segment red" :style="{ flex: fallCount }"></view>
+      <view class="progress-bar-segment red" :style="{ flex: riseCount }"></view>
     </view>
     <view class="rise-fall-text">
       <text class="fall-text">跌 {{ fallCount }} 家</text>
