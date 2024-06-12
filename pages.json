@@ -149,24 +149,25 @@
         "spacing": "3px",
         "list": [
             {
-                "iconPath": "static/images/market.png",
-                "selectedIconPath": "static/images/market.png",
+                "iconPath": "static/images/market_off.png",
+                "selectedIconPath": "static/images/market_on.png",
                 "pagePath": "src/pages/market/market",
                 "text": "行情"
             },
             {
-                "iconPath": "static/images/add.png",
-                "selectedIconPath": "static/images/add.png",
+                "iconPath": "static/images/add_off.png",
+                "selectedIconPath": "static/images/add_on.png",
                 "pagePath": "src/pages/favorites/favorites",
                 "text": "自选"
             },
             {
-                "iconPath": "static/images/trade.png",
-                "selectedIconPath": "static/images/trade.png",
+                "iconPath": "static/images/trade_off.png",
+                "selectedIconPath": "static/images/trade_on.png",
                 "pagePath": "src/pages/trade/trade",
                 "text": "交易"
             }
         ]
+
     },
     "globalStyle": {
         "navigationBarTextStyle": "black",
