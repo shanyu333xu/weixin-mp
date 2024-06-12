@@ -61,6 +61,7 @@ import { useStockList } from "/src/composables/exStockList";
 import { StockData } from "/src/types/stockService";
 import { store } from "@/uni_modules/uni-id-pages/common/store";
 import pageJson from "@/pages.json";
+
 const db = uniCloud.database();
 const stocks = ref<StockData[]>([]);
 const searchText = ref<string>("");
@@ -73,6 +74,22 @@ const stockCodes1 = ref<string[] | null>([
 	"sh600356",
 	"sh600560",
 ]);
+// 随机选取 4 个 code
+function getRandomCodes(list, count) {
+    // 复制一份原数组，避免修改原数组
+    const arrayCopy = list.slice();
+    const result = [];
+
+    for (let i = 0; i < count; i++) {
+        const randomIndex = Math.floor(Math.random() * arrayCopy.length);
+        result.push(arrayCopy[randomIndex].code);
+        // 移除已选中的元素
+        arrayCopy.splice(randomIndex, 1);
+    }
+
+    return result;
+}
+
 
 const isFavorite = ref<Record<string, boolean>>({});
 let likeTime = ref<number>(0);
@@ -95,6 +112,8 @@ const getStockData1 = async () => {
 };
 
 onMounted(() => {
+    
+stockCodes1.value = getRandomCodes(BaseStocksList, 4);
 	getStockData1();
 });
 
