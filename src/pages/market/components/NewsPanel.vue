@@ -18,18 +18,20 @@
 					v-for="(item, index) in newsData"
 					:key="item.seq"
 					class="news-item"
+                   
 				>
 					<img
 						:src="`/static/images/数字${index + 1}.png`"
 						class="stock_image"
 					/>
-					<navigator
-						:url="`/components/NewsDetail/NewsDetail?url=${item.url}`"
+					<view
+						
 						class="news-title"
-						@click.stop
+                        
+                         @click="handleClick(item.seq)"
 					>
 						{{ truncateText(item.title) }}
-					</navigator>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -42,6 +44,15 @@ import { getMarketNewsAPI, newsData } from "../service/marketNews";
 
 const isExpanded = ref(false);
 const currentIndex = ref(0);
+
+const handleClick = (seq: string) => {
+   // 阻止默认行为
+  console.log("Navigating to detail with seq:", seq);
+  uni.navigateTo({
+    url: `/src/pages/news-detail/news-detail2?seq=${seq}`,
+  });
+};
+
 
 const togglePanel = () => {
 	isExpanded.value = !isExpanded.value;

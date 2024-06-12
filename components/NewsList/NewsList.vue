@@ -32,7 +32,7 @@ const listArr = ref<Article[]>([]);
 
 const goDetail = (docid: string) => {
 	uni.navigateTo({
-		url: `/src/pages/news-detail/news-detail?docid=${docid}`, // 使用正确的页面路径
+		url: `/src/pages/news-detail/news-detail?docid=${docid}`, 
 	});
 };
 
