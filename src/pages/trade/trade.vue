@@ -33,6 +33,30 @@
 			</view>
 		</view>
 	</view>
+	
+	<view class="custom-icons">
+	    <view class="icon-item" @click="onBuyClicked">
+	      <image class="icon" src="/static/images/buy.png"></image>
+	      <text class="icon-text">买入</text>
+	    </view>
+	    <view class="icon-item" @click="onSellClicked">
+	      <image class="icon" src="/static/images/sell.png"></image>
+	      <text class="icon-text">卖出</text>
+	    </view>
+	    <view class="icon-item" @click="onCancelClicked">
+	      <image class="icon" src="/static/images/cancel.png"></image>
+	      <text class="icon-text">撤单</text>
+	    </view>
+	    <view class="icon-item" @click="onHoldingsClicked">
+	      <image class="icon" src="/static/images/holding.png"></image>
+	      <text class="icon-text">持仓</text>
+	    </view>
+	    <view class="icon-item" @click="onQueryClicked">
+	      <image class="icon" src="/static/images/query.png"></image>
+	      <text class="icon-text">查询</text>
+	    </view>
+	  </view>
+	  
 </template>
 
 <script lang="ts" setup>
@@ -124,5 +148,29 @@ function switchUser() {
 	font-size: 16px;
 	font-weight: bold;
 	color: black;
+}
+
+.custom-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+}
+
+.icon-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.icon-text {
+  margin-top: 5px;
+  white-space: nowrap; /* 防止文字换行 */
 }
 </style>
