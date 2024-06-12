@@ -223,7 +223,7 @@ const updateMarketStatus = () => {
 	const isOpen =
 		((hours > 9 || (hours === 9 && minutes >= 30)) &&
 			(hours < 11 || (hours === 11 && minutes < 30))) ||
-		(hours > 13 && hours < 15);
+		(hours >= 13 && hours < 15);
 	const days = [
 		"星期天",
 		"星期一",
@@ -369,7 +369,6 @@ onMounted(async () => {
 	text-align: center;
 	border-radius: 5px;
 }
-
 
 .index-box:last-child {
 	margin-right: 0;
