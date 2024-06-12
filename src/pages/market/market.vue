@@ -355,8 +355,10 @@ onMounted(async () => {
 	display: flex;
 	gap: 5px;
 	justify-content: space-between;
-	width: calc(100% - 20px);
+	width: 100%; /* 保持宽度为100% */
 	margin-top: 10px;
+	padding: 0; /* 移除padding以避免额外空隙 */
+	box-sizing: border-box; /* 确保内边距不影响总宽度 */
 }
 
 .index-box {
@@ -367,6 +369,7 @@ onMounted(async () => {
 	text-align: center;
 	border-radius: 5px;
 }
+
 
 .index-box:last-child {
 	margin-right: 0;
